@@ -10,7 +10,7 @@ class RootApp extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Text("Welcome back" , style: AppTextStyles.h1,),
+          // child: Text("Welcome back" , style: AppTextStyles.h1,),
         ),
       ),
     );

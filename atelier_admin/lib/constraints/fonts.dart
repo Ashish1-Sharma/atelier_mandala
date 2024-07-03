@@ -1,60 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
+double getResponsiveFontSize(double baseFontSize) {
+  return baseFontSize * Get.width / 375; // Assuming 375 is the base width of your design
+}
 
 class AppTextStyles {
-  static final TextStyle h1 = GoogleFonts.poppins(
-    fontSize: 28,
+  static TextStyle h1({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(28),
     height: 1.1,
     fontWeight: FontWeight.bold,
+    color: color,
   );
 
-  static final TextStyle h2 = GoogleFonts.poppins(
-    fontSize: 24,
+  static TextStyle h2({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(24),
     height: 1.2,
     fontWeight: FontWeight.normal,
+    color: color,
   );
 
-  static final TextStyle h3 = GoogleFonts.poppins(
-    fontSize: 20,
+  static TextStyle h3({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(20),
     height: 1.2,
     fontWeight: FontWeight.bold,
+    color: color,
   );
 
-  static final TextStyle h4 = GoogleFonts.poppins(
-    fontSize: 18,
+  static TextStyle h4({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(18),
     height: 1.2,
     fontWeight: FontWeight.bold,
+    color: color,
   );
 
-  static final TextStyle bodyBig = GoogleFonts.poppins(
-    fontSize: 18,
+  static TextStyle bodyBig({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(18),
     height: 1.3,
     letterSpacing: 0,
     fontWeight: FontWeight.normal,
+    color: color,
   );
 
-  static final TextStyle bodyMain18 = GoogleFonts.poppins(
-    fontSize: 18,
+  static TextStyle bodyMain18({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(18),
     height: 1.3,
     fontWeight: FontWeight.normal,
+    color: color,
   );
 
-  static final TextStyle bodyMain16 = GoogleFonts.poppins(
-    fontSize: 16,
+  static TextStyle bodyMain16({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(16),
     height: 1.3,
     fontWeight: FontWeight.normal,
+    color: color,
   );
 
-  static final TextStyle bodySmall = GoogleFonts.poppins(
-    fontSize: 14,
+  static TextStyle bodySmall({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(14),
     height: 1.3,
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.w600,
+    color: color,
   );
 
-  static final TextStyle bodySmallest = GoogleFonts.poppins(
-    fontSize: 12,
+  static TextStyle bodySmallest({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(12),
     height: 1.3,
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.w500,
+    color: color,
   );
 }
 

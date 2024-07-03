@@ -1,0 +1,30 @@
+import 'package:atelier_admin/constraints/colors.dart';
+import 'package:atelier_admin/constraints/fonts.dart';
+import 'package:flutter/material.dart';
+
+class CustomButton extends StatefulWidget {
+  const CustomButton({super.key});
+
+  @override
+  State<CustomButton> createState() => _CustomButtonState();
+}
+
+class _CustomButtonState extends State<CustomButton> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: ElevatedButton(
+          style: ButtonStyle(
+            shape: WidgetStateProperty.all(RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8)
+            )),
+            backgroundColor: WidgetStateProperty.all(AppColors.brandColor)
+          ),
+          onPressed: () {}, child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text("Sign In",style: AppTextStyles.bodyBig(color: AppColors.black5),),
+          )),
+    );
+  }
+}
