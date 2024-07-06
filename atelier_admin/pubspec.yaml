@@ -54,6 +54,7 @@ dependencies:
   cloud_firestore: ^5.0.2
   cached_network_image: ^3.3.1
   date_field: ^5.0.1
+  flutter_svg: ^2.0.10+1
 
 
 
@@ -80,8 +81,12 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/
+    - assets/icons/drawer_icons/
+    - assets/images/users/
+    - assets/images/workshops/
+    - assets/icons/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
