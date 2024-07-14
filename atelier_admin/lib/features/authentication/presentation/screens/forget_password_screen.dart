@@ -1,5 +1,7 @@
+import 'package:atelier_admin/features/authentication/data/data_source/email_verification.dart';
 import 'package:atelier_admin/features/authentication/presentation/screens/set_new_password.dart';
 import 'package:atelier_admin/features/authentication/presentation/screens/verification_screen.dart';
+import 'package:email_otp/email_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -28,16 +30,19 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.black6,
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Get.back();
           },
-          icon: Icon(Icons.arrow_back_ios_new,color: AppColors.brandColor,),
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: AppColors.brandColor,
+          ),
         ),
         title: Text('Forgot Password'),
         centerTitle: true,
       ),
       body: SafeArea(
-        child:  PageView(
+        child: PageView(
           controller: pageController,
           physics: NeverScrollableScrollPhysics(),
           scrollDirection: Axis.horizontal,
@@ -83,18 +88,33 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     SizedBox(
                       height: Get.height * 0.02,
                     ),
-                    CustomButton(str: "Continue",onPressed: (){
-                      pageController.animateToPage(1, duration: Duration(milliseconds: 100), curve: Curves.linear);
-                    },),
-
-
-
-
+                    CustomButton(
+                      str: "Continue",
+                      onPressed: () async {
+                        EmailVerification.sendOtp(email).then(
+                          (value) {
+                            if (value) {
+                              print(value);
+                              pageController.animateToPage(1,
+                                  duration: Duration(milliseconds: 100),
+                                  curve: Curves.linear);
+                            } else {
+                              Get.snackbar("Error", "Try again sometime",
+                                  icon: const Icon(Icons.dangerous, color: AppColors.errorColor),
+                                  snackPosition: SnackPosition.TOP,
+                                  snackStyle: SnackStyle.FLOATING);
+                            }
+                          },
+                        );
+                        // await EmailOTP.sendOTP(email: email.text);
+                      },
+                    ),
                   ],
                 ),
               ),
             ),
-            VerificationScreen(pageController: pageController),
+            VerificationScreen(
+                pageController: pageController, controller: email),
             NewPassword(pageController: pageController)
           ],
         ),

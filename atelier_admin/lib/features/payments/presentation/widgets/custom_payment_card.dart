@@ -3,9 +3,17 @@ import 'package:atelier_admin/constraints/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
+
+import '../../data/models/purchase_model.dart';
 
 class CustomPaymentCard extends StatefulWidget {
-  const CustomPaymentCard({super.key});
+  final PurchaseModel model;
+
+  const CustomPaymentCard(
+      {super.key,
+        required this.model});
+
 
   @override
   State<CustomPaymentCard> createState() => _CustomPaymentCardState();
@@ -14,6 +22,8 @@ class CustomPaymentCard extends StatefulWidget {
 class _CustomPaymentCardState extends State<CustomPaymentCard> {
   @override
   Widget build(BuildContext context) {
+    final date = DateFormat("dd MMM yyyy").format(DateTime.fromMillisecondsSinceEpoch(int.parse(widget.model.purchasedDate)));
+    final time = DateFormat("hh:mm a").format(DateTime.fromMillisecondsSinceEpoch(int.parse(widget.model.purchasedDate)));
     return Card(
       color: Colors.white,
       margin: EdgeInsets.symmetric(horizontal: 10),
@@ -37,7 +47,7 @@ class _CustomPaymentCardState extends State<CustomPaymentCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Ashish Sharma",
+                        widget.model.name,
                         style: AppTextStyles.bodyMain16(color: Colors.black),
                       ),
                       Text(
@@ -67,7 +77,7 @@ class _CustomPaymentCardState extends State<CustomPaymentCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Payment',style: AppTextStyles.bodyMain16(color: Colors.black),),
-                Text("€ 299",style: AppTextStyles.bodyMain16(color: Colors.black))
+                Text("€ ${widget.model.price}",style: AppTextStyles.bodyMain16(color: Colors.black))
               ],
             ),
             SizedBox(height: Get.height*0.01,),
@@ -75,7 +85,7 @@ class _CustomPaymentCardState extends State<CustomPaymentCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Payment Status',style: AppTextStyles.bodyMain16(color: Colors.black),),
-                Text("Completed",style: AppTextStyles.bodyMain16(color: AppColors.successColor))
+                Text(widget.model.paymentStatus.isEmpty ? "Failed" : widget.model.paymentStatus,style: AppTextStyles.bodyMain16(color: AppColors.errorColor))
               ],
             ),
             SizedBox(height: Get.height*0.01,),
@@ -83,7 +93,7 @@ class _CustomPaymentCardState extends State<CustomPaymentCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Purchased Date',style: AppTextStyles.bodyMain16(color: Colors.black),),
-                Text("Sat-17Apr2024",style: AppTextStyles.bodyMain16(color: AppColors.black1))
+                Text("${date ?? ''}",style: AppTextStyles.bodyMain16(color: AppColors.black1))
               ],
             ),
             SizedBox(height: Get.height*0.01,),
@@ -91,7 +101,7 @@ class _CustomPaymentCardState extends State<CustomPaymentCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Purchased Time',style: AppTextStyles.bodyMain16(color: Colors.black),),
-                Text("10:30 AM",style: AppTextStyles.bodyMain16(color: AppColors.black1))
+                Text("${time}",style: AppTextStyles.bodyMain16(color: AppColors.black1))
               ],
             ),
 

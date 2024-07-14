@@ -3,9 +3,19 @@ import 'package:atelier_admin/constraints/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 
 class CustomUserWidget extends StatefulWidget {
-  const CustomUserWidget({super.key});
+  final bool image;
+  final String name;
+  final String email;
+  final DateTime time;
+  const CustomUserWidget(
+      {super.key,
+      required this.image,
+      required this.name,
+      required this.email,
+      required this.time});
 
   @override
   State<CustomUserWidget> createState() => _CustomUserWidgetState();
@@ -19,66 +29,39 @@ class _CustomUserWidgetState extends State<CustomUserWidget> {
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: Container(
         padding: EdgeInsets.all(10),
-        child: Column(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Leading image
-                Image.asset(
-                  "assets/images/users/user1.png",
-                  width: 40, // adjust width and height as needed
-                  height: 40,
-                ),
-                SizedBox(width: 10), // spacing between image and text
-                // Text section
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Ashish Sharma",
-                        style: AppTextStyles.bodyMain16(color: Colors.black),
-                      ),
-                      Text(
-                        "wwwviveksharma45@gmail.com",
-                        style: AppTextStyles.bodySmallest(color: AppColors.black3),
-                      ),
-                    ],
+            CircleAvatar(
+              backgroundColor: AppColors.brandColor,
+              child: Text(
+                widget.name.toString().substring(0, 1).toUpperCase(),
+                style: AppTextStyles.bodyBig(color: AppColors.black6),
+              ),
+            ),
+            SizedBox(width: 10), // spacing between image and text
+            // Text section
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.name,
+                    style: AppTextStyles.bodyMain16(color: Colors.black),
                   ),
-                ),
-                // Trailing icon
-                Icon(
-                  Icons.more_vert,
-                  color: AppColors.brandColor,
-                ),
-              ],
+                  Text(
+                    widget.email,
+                    style:
+                        AppTextStyles.bodySmallest(color: AppColors.black3),
+                  ),
+                ],
+              ),
             ),
-            SizedBox(height: Get.height*0.01,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Event',style: AppTextStyles.bodyMain16(color: Colors.black),),
-                Text("Data Analysis",style: AppTextStyles.bodyMain16(color: Colors.black),)
-              ],
+            // Trailing icon
+            Text(
+              "${DateFormat('yyyy-MM-dd').format(widget.time)}",
+              style: AppTextStyles.bodyMain16(color: Colors.black),
             ),
-            SizedBox(height: Get.height*0.01,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Payment',style: AppTextStyles.bodyMain16(color: Colors.black),),
-                Text("€ 299",style: AppTextStyles.bodyMain16(color: Colors.black))
-              ],
-            ),
-            SizedBox(height: Get.height*0.01,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Status',style: AppTextStyles.bodyMain16(color: Colors.black),),
-                Text("Failed",style: AppTextStyles.bodyMain16(color: AppColors.errorColor))
-              ],
-            ),
-
           ],
         ),
       ),

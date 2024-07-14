@@ -1,5 +1,6 @@
 import 'package:atelier_admin/constraints/colors.dart';
 import 'package:atelier_admin/constraints/fonts.dart';
+import 'package:atelier_admin/features/authentication/data/data_source/auth_store.dart';
 import 'package:atelier_admin/features/authentication/presentation/widgets/CustomButton.dart';
 import 'package:atelier_admin/features/authentication/presentation/widgets/CustomField.dart';
 import 'package:atelier_admin/global_widgets/custom_normal_text_field.dart';
@@ -21,6 +22,19 @@ class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    email.dispose();
+    password.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +95,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 Space.spacer(0.004),
 
                 CustomButton(str: "Sign In",onPressed: (){
-                  Get.toNamed('/home');
+                  AuthStore.login(email.text,password.text).then((value) {
+
+                  },);
                 },)
 
 

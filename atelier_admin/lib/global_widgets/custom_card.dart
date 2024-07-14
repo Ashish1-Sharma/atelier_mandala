@@ -36,9 +36,9 @@ class _CustomCardState extends State<CustomCard> {
   Widget build(BuildContext context) {
     return Card(
       color: AppColors.black6,
-      margin: EdgeInsets.symmetric(horizontal: 5,vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 5,vertical: 10),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 15),
+        padding: const EdgeInsets.symmetric(vertical: 15),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -46,7 +46,7 @@ class _CustomCardState extends State<CustomCard> {
                 margin: EdgeInsets.symmetric(horizontal: 5),
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(widget.image,width: 100,height: 90,fit: BoxFit.cover,))),
+                    child: Image.network(widget.image,width: 100,height: 90,fit: BoxFit.cover,))),
 
             Expanded(
               child: Container(
@@ -69,7 +69,7 @@ class _CustomCardState extends State<CustomCard> {
                       children: [
                         widget.subIcon2 == true ? SvgPicture.asset('assets/icons/calender.svg') : SizedBox(),
                         SizedBox(width: 4,),
-                        Expanded(child: Text(widget.subTitle2,overflow: TextOverflow.ellipsis,style: AppTextStyles.bodySmall(color: AppColors.black3)))
+                        Expanded(child: Text(widget.subTitle2,overflow: TextOverflow.ellipsis,style: AppTextStyles.bodySmallest(color: AppColors.black3).copyWith(letterSpacing: 0.3)))
                       ],
                     ),
                     SizedBox(height: 5,),
@@ -77,7 +77,7 @@ class _CustomCardState extends State<CustomCard> {
                       children: [
                         widget.subIcon3,
                         SizedBox(width: 4,),
-                        Text(widget.subTitle3,style: AppTextStyles.bodySmall(color: AppColors.black3))
+                        Text(widget.subTitle3,style: AppTextStyles.bodySmallest(color: AppColors.black3))
                       ],
                     )
                   ],
@@ -92,7 +92,6 @@ class _CustomCardState extends State<CustomCard> {
                     PopupMenuItem(child: Text("Edit")),
                     PopupMenuItem(child: Text("Preview")),
                     PopupMenuItem(child: Text("Delete")),
-
                   ];
                 },
                 child: Icon(Icons.more_vert,color: AppColors.brandColor,),

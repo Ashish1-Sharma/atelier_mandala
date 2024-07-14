@@ -1,7 +1,12 @@
 import 'package:atelier_admin/constraints/colors.dart';
 import 'package:atelier_admin/constraints/fonts.dart';
+import 'package:atelier_admin/features/dashboard/data/dashboard_controller.dart';
+import 'package:atelier_admin/features/dashboard/data/data_source/dashboard_data.dart';
+import 'package:atelier_admin/features/homepage/data/HomePageController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:iconsax/iconsax.dart';
 
 class InfoGrid extends StatefulWidget {
@@ -21,32 +26,56 @@ class _InfoGridState extends State<InfoGrid> {
     "Total Notification"
   ];
 
+  final List<String> _icons = [
+    'users',
+    'enrolled',
+    't_orders',
+    'payments',
+    's_orders',
+  ];
   // final
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       // controller: d,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
         crossAxisSpacing: 5,
-        mainAxisSpacing: 5
+        mainAxisSpacing: 5,
       ),
-      itemCount: 6,
-      physics: NeverScrollableScrollPhysics(),
+
+      itemCount: 5,
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        return Card(
-          color: AppColors.black6,
-          child: Column(
-            // mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Iconsax.user,color: AppColors.brandColor,size: 30,),
-              Text("${infoText[index]}",style: AppTextStyles.bodyBig(color: Colors.black),),
-              Text("470",style: AppTextStyles.h3(color: Colors.black),)
-            ],
-          ),
+        return StreamBuilder<int>( // Specify the data type as int (assuming stream emits integers)
+          stream: DashboardData.streamCounters(index),
+          builder: (context, snapshot) {
+            return Card(
+              color: AppColors.black6,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    "assets/icons/dashboard_icons/${_icons[index]}.svg",
+                    width: 40,
+                  ),
+                  Text(
+                    "${infoText[index]}",
+                    style: AppTextStyles.bodyBig(color: Colors.black),
+                  ),
+                  snapshot.hasError
+                      ? CircularProgressIndicator(color: AppColors.black1)
+                      : Text(
+                    snapshot.hasData ? "${snapshot.data}" : "-", // Display '-' if no data
+                    style: AppTextStyles.h3(color: Colors.black),
+                  ),
+                ],
+              ),
+            );
+          },
         );
+
       },
 
 

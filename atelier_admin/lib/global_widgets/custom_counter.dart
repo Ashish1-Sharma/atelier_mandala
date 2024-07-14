@@ -21,7 +21,7 @@ class _CustomCounterState extends State<CustomCounter> {
         textAlign: TextAlign.center,
         controller: widget.controller,
         decoration: InputDecoration(
-          hintText: _Counter.value.toString(),
+          hintText: Counter.value.toString(),
           hintStyle: AppTextStyles.bodySmall(color: AppColors.brandColor),
           fillColor: AppColors.black6,
           filled: true,
@@ -33,15 +33,15 @@ class _CustomCounterState extends State<CustomCounter> {
               borderRadius: BorderRadius.circular(5)),
           prefixIcon: IconButton(
             onPressed: (){
-              if(_Counter.value > 1){
-                _Counter.value = _Counter.value -1;
+              if(Counter.value > 1){
+                Counter.value = Counter.value -1;
               }
             },
             icon: Icon(Icons.remove,color: AppColors.brandColor),
           ),
           suffixIcon: IconButton(
             onPressed: (){
-              _Counter.value = _Counter.value +1;
+              Counter.value = Counter.value +1;
             },
             icon: Icon(Icons.add,color: AppColors.brandColor,),
           ),
@@ -52,6 +52,6 @@ class _CustomCounterState extends State<CustomCounter> {
   }
 }
 
-class _Counter extends GetxController{
+class Counter extends GetxController{
   static RxInt value = 1.obs;
 }

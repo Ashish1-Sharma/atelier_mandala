@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "739941194529",
+    "project_id": "atelia-mandala",
+    "storage_bucket": "atelia-mandala.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739941194529:android:181053e9bca143035c3c60",
+        "android_client_info": {
+          "package_name": "com.atelier.admin.atelier_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjcT8Vq5LPTNmeaOeonN7ydURH7r-gL20"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

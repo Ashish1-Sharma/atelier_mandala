@@ -64,6 +64,7 @@ class _HomePageState extends State<HomePage> {
     '/create_takeaway',
     '/create_gift_card',
     '/create_store_item',
+    '/create_user'
   ];
   final scaffoldKey = GlobalKey<ScaffoldState>();
   PageStorageBucket bucket = PageStorageBucket();
@@ -117,6 +118,8 @@ class _HomePageState extends State<HomePage> {
                           Get.toNamed(floatingRoutes[2]);
                         } else if (idx == 6) {
                           Get.toNamed(floatingRoutes[3]);
+                        } else if (idx == 0) {
+                          Get.toNamed(floatingRoutes[4]);
                         }
                       },
                       backgroundColor: AppColors.brandColor,

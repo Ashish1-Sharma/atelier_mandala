@@ -7,6 +7,8 @@ import 'package:atelier_admin/features/dashboard/presentation/widgets/upcoming_w
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../data/data_source/dashboard_data.dart';
+
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -16,6 +18,12 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    // DashboardData.totalUsers();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.black5,
@@ -24,9 +32,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: Column(
           children: [
             InfoGrid(),
-            NewUsers(),
-            LatestPurchases(),
-            UpcomingWorkshops()
+            // NewUsers(),
+            // LatestPurchases(),
+            // UpcomingWorkshops()
           ],
         ),
       ),

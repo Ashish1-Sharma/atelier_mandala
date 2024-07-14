@@ -1,11 +1,14 @@
 import 'dart:async';
 
 import 'package:atelier_admin/constraints/fonts.dart';
+import 'package:atelier_admin/features/authentication/data/data_source/auth_store.dart';
 import 'package:atelier_admin/features/authentication/presentation/screens/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+
+import 'global_firebase.dart';
 
 class RootApp extends StatefulWidget {
   const RootApp({super.key});
@@ -19,7 +22,7 @@ class _RootAppState extends State<RootApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 2), () => Get.toNamed('/login'),);
+    AuthStore.checkCurrUser();
   }
   @override
   Widget build(BuildContext context) {
@@ -44,4 +47,6 @@ class _RootAppState extends State<RootApp> {
       ),
     );
   }
+  
+  
 }

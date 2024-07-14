@@ -14,11 +14,28 @@ import 'package:atelier_admin/features/users/presentation/screens/user_page_scre
 import 'package:atelier_admin/features/workshop/presentation/screens/workshop_screen.dart';
 import 'package:atelier_admin/features/workshop/presentation/widgets/create_new_workshop.dart';
 import 'package:atelier_admin/root_app.dart';
+import 'package:email_otp/email_otp.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
-void main(){
+import 'features/dashboard/presentation/widgets/create_users.dart';
+import 'firebase_options.dart';
+
+
+//  recovery code for twilio ZJT6QZSM9UULCWXUPG48KHF7 SMTP server
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  EmailOTP.config(
+    appName: 'Ateliea Mandala',
+    otpType: OTPType.numeric,
+    emailTheme: EmailTheme.v2,
+  );
+  // WidgetsBinding.instance.addPostFrameCallback;
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   // Get.put(Controller());
   runApp(const MyApp());
 }
@@ -47,7 +64,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/create_store_item',page: () => const CreateNewStoreItem()),
         GetPage(name: '/store',page: () => const StoreScreen()),
         GetPage(name: '/edit_profile',page: () => const EditProfile()),
-        // GetPage(name: '/verification',page: () => const VerificationScreen()),
+        GetPage(name: '/create_user',page: () => const CreateUsers()),
       ],
       home: RootApp(),
     );
