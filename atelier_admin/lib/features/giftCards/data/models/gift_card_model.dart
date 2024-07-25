@@ -3,9 +3,12 @@ class GiftCardModel {
   String description;
   String imageUrl;
   String expiryDate;
-  int quantity;
+  String quantity;
   bool status;
   String price;
+  String gId;
+  // List<String> codes;
+
 
   GiftCardModel({
     required this.title,
@@ -15,6 +18,8 @@ class GiftCardModel {
     required this.quantity,
     required this.status,
     required this.price,
+    required this.gId,
+    // required this.codes
   });
 
   // Factory method to create a GiftCardModel object from JSON
@@ -24,9 +29,11 @@ class GiftCardModel {
       description: json['description'],
       imageUrl: json['imageUrl'],
       expiryDate: json['expiryDate'],
-      quantity: json['quantity'],
+      quantity: json['quantity'] ?? '1',
       status: json['status'],
       price: json['price'],
+      gId: json['gId'],
+      // codes: json['codes'],
     );
   }
 
@@ -40,6 +47,8 @@ class GiftCardModel {
       'quantity': quantity,
       'status': status,
       'price': price,
+      'gId' : gId,
+
     };
   }
 }

@@ -3,9 +3,10 @@ class StoreModel {
   String description;
   String imageUrl;
   String price;
-  int stockQuantity;
-  List<String> tags;
-  String time;
+  String stockQuantity;
+  int users;
+  String sId;
+  String date;
 
   StoreModel({
     required this.title,
@@ -13,20 +14,22 @@ class StoreModel {
     required this.imageUrl,
     required this.price,
     required this.stockQuantity,
-    required this.tags,
-    required this.time,
+    required this.sId,
+    required this.users,
+    required this.date
   });
 
   // Factory method to create a StoreModel object from JSON
   factory StoreModel.fromMap(Map<String, dynamic> json) {
     return StoreModel(
-      title: json['title'],
-      description: json['description'],
-      imageUrl: json['imageUrl'],
-      price: json['price'],
-      stockQuantity: json['stockQuantity'],
-      tags: List<String>.from(json['tags']),
-      time: json['time'],
+      title: json['title'] ?? '',
+      description: json['description'] ?? '',
+      imageUrl: json['imageUrl'] ?? '',
+      price: json['price'] ?? '',
+      stockQuantity: json['stockQuantity'] ?? '0',
+      sId: json['sId'] ?? '',
+      users: json['users'] ?? 0,
+      date: json['date'] ?? '',
     );
   }
 
@@ -38,8 +41,9 @@ class StoreModel {
       'imageUrl': imageUrl,
       'price': price,
       'stockQuantity': stockQuantity,
-      'tags': tags,
-      'time': time,
+      'sId' : sId,
+      'users' : users,
+      'date' : date
     };
   }
 }

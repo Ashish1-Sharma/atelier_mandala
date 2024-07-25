@@ -1,4 +1,5 @@
 import 'package:atelier_admin/features/store/data/models/store_model.dart';
+import 'package:atelier_admin/features/store/presentation/widgets/custom_store_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -49,7 +50,8 @@ class _StoreScreenState extends State<StoreScreen> {
                           borderRadius: BorderRadius.circular(30),
                           borderSide: BorderSide.none)),
                 ),
-              ),Container(
+              ),
+              Container(
                   margin: EdgeInsets.symmetric(horizontal: 5),
                   child: PopupMenuButton(
                       color: Colors.white,
@@ -67,19 +69,19 @@ class _StoreScreenState extends State<StoreScreen> {
           ),
           Expanded(
             child: Obx(
-                  () => StreamBuilder(
+              () => StreamBuilder(
                 stream: GlobalFirebase.cloud
                     .collection('store')
                     .orderBy('title')
                     .startAt([_TempController.item.value]).endAt(
-                    ["${_TempController.item.value}\uf8ff"]).snapshots(),
+                        ["${_TempController.item.value}\uf8ff"]).snapshots(),
                 builder: (context, snapshot) {
                   // print(_TempController.item.value);
                   final data = snapshot.data?.docs;
                   if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   } else if (!snapshot.hasData) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(
                         color: AppColors.errorColor,
                       ),
@@ -93,23 +95,7 @@ class _StoreScreenState extends State<StoreScreen> {
                       final docSnapshot = data?[index]; // Access data directly
                       final model =
                       StoreModel.fromMap(docSnapshot!.data());
-                      return CustomCard(
-                        image: model
-                            .imageUrl, // Assuming imageUrl is a property in model
-                        title: model.title,
-                        subTitle1:
-                        "324 People Enrolled", // Only show if enrolledCount exists
-                        price: model.price.isNotEmpty
-                            ? "€ ${model.price}"
-                            : "", // Only show if price exists
-                        subIcon2:
-                        false, // Assuming hasHighlighter is a property in model
-                        subTitle2:
-                        "Stock: ${model.stockQuantity}", // Assuming dateRange is a property in model
-                        subIcon3: SvgPicture.asset('assets/icons/clock.svg'),
-                        subTitle3:
-                        "${model.time}", // Assuming timeRange is a property in WorkshopModel
-                      );
+                      return CustomStoreCard(model: model);
                     },
                   );
                 },

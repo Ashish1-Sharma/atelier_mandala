@@ -33,7 +33,7 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
         ),
       ),
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 15),
+        margin: const EdgeInsets.symmetric(vertical: 15),
         child: Text(
           widget.txt,
           style: AppTextStyles.bodyBig(color: widget.txtColor),

@@ -32,6 +32,8 @@ class _DropDownCategoryState extends State<DropDownCategory> {
         hintText: "Select Category",
         hintStyle: AppTextStyles.bodySmall(color: AppColors.black3),
         suffixIcon: DropdownButtonFormField(
+           dropdownColor: AppColors.black6,
+          hint: Text("select"),
           padding: EdgeInsets.only(left: 10),
           icon: Icon(Icons.keyboard_arrow_down,color: AppColors.brandColor,),
           decoration: InputDecoration(
@@ -43,13 +45,14 @@ class _DropDownCategoryState extends State<DropDownCategory> {
           items: TakeawayController.categories.map(
             (e) {
               return DropdownMenuItem(
-                child: Text(e),
+                child: Text(e,style: AppTextStyles.bodySmallNormal(color: AppColors.black1),),
                 value: e,
               );
             },
           ).toList(),
           onChanged: (value) {
             TakeawayController.selectedValue.value = value!;
+            widget.controller.text = TakeawayController.selectedValue.value;
           },
         ),
       ),
@@ -59,5 +62,4 @@ class _DropDownCategoryState extends State<DropDownCategory> {
     // return Te;
   }
 
-  void showDropDownItems() {}
 }

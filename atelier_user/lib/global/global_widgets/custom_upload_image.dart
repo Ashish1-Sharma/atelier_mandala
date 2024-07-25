@@ -1,11 +1,7 @@
-import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 
 import '../../constraints/colors.dart';
 
@@ -17,8 +13,7 @@ class CustomUploadImage extends StatefulWidget {
 }
 
 class _CustomUploadImageState extends State<CustomUploadImage> {
-  late XFile? pickedImage = null;
-  final _picker = ImagePicker();
+  late XFile? pickedImage;
   @override
   void initState() {
     // TODO: implement initState
@@ -42,7 +37,7 @@ class _CustomUploadImageState extends State<CustomUploadImage> {
         ),
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: const [
             // Obx(
             // ()=> Container(
             //     decoration: BoxDecoration(

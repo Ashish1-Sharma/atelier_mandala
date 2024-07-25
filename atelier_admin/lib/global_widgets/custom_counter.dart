@@ -35,6 +35,7 @@ class _CustomCounterState extends State<CustomCounter> {
             onPressed: (){
               if(Counter.value > 1){
                 Counter.value = Counter.value -1;
+                widget.controller.text = Counter.value.toString();
               }
             },
             icon: Icon(Icons.remove,color: AppColors.brandColor),
@@ -42,6 +43,7 @@ class _CustomCounterState extends State<CustomCounter> {
           suffixIcon: IconButton(
             onPressed: (){
               Counter.value = Counter.value +1;
+              widget.controller.text = Counter.value.toString();
             },
             icon: Icon(Icons.add,color: AppColors.brandColor,),
           ),

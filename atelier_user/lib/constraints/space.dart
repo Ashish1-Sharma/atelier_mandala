@@ -8,4 +8,9 @@ class Space{
       height: Get.height*value,
     );
   }
+  static Widget width(double value){
+    return SizedBox(
+      width: Get.width*value,
+    );
+  }
 }

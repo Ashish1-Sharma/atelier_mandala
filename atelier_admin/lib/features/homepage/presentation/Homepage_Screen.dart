@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
     TakeawayScreen(),
     GiftCardScreen(),
     StoreScreen(),
-    EditProfile(),
+    // EditProfile(),
     ChangePassword()
   ];
 
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
     'Manage Takeaway',
     'Publish Gift Card',
     'Manage Store',
-    'Edit Profile',
+    // 'Edit Profile',
     'Change Password',
     'Logout',
   ];
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
     '/create_takeaway',
     '/create_gift_card',
     '/create_store_item',
-    '/create_user'
+    // '/create_user'
   ];
   final scaffoldKey = GlobalKey<ScaffoldState>();
   PageStorageBucket bucket = PageStorageBucket();
@@ -118,8 +118,6 @@ class _HomePageState extends State<HomePage> {
                           Get.toNamed(floatingRoutes[2]);
                         } else if (idx == 6) {
                           Get.toNamed(floatingRoutes[3]);
-                        } else if (idx == 0) {
-                          Get.toNamed(floatingRoutes[4]);
                         }
                       },
                       backgroundColor: AppColors.brandColor,

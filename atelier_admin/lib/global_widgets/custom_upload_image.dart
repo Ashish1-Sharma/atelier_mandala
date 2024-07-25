@@ -26,7 +26,7 @@ class _CustomUploadImageState extends State<CustomUploadImage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    GlobalController.path.value = "";
+
   }
   @override
   Widget build(BuildContext context) {
@@ -74,15 +74,11 @@ class _CustomUploadImageState extends State<CustomUploadImage> {
       print("hello");
       return;
     }
-    // print("hellas");
     print(GlobalController.pickedImage);
     GlobalController.path.value = GlobalController.pickedImage!.path;
     print(GlobalController.path.value);
     GlobalController.image = File(GlobalController.pickedImage!.path);
-    GlobalController.link.value = GlobalController.image!.path.split("/").last;
-    // print(GlobalController.link.value);
-
-
+    GlobalController.link.value = GlobalController.image.path.split("/").last;
   }
 
 }

@@ -88,29 +88,13 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
                   }
                   return ListView.builder(
                     scrollDirection: Axis.vertical,
-                    itemCount: snapshot.data?.docs.length,
+                    itemCount: snapshot.data?.docs.length ?? 0,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       final docSnapshot = data?[index]; // Access data directly
                       final model =
                       GiftCardModel.fromMap(docSnapshot!.data());
-                      return CustomCard(
-                        image: model
-                            .imageUrl, // Assuming imageUrl is a property in WorkshopModel
-                        title: model.title,
-                        subTitle1:
-                        "324 People Enrolled", // Only show if enrolledCount exists
-                        price: model.price.isNotEmpty
-                            ? "€ ${model.price}"
-                            : "", // Only show if price exists
-                        subIcon2:
-                        true, // Assuming hasHighlighter is a property in WorkshopModel
-                        subTitle2:
-                        "Value: ${model.quantity}", // Assuming dateRange is a property in WorkshopModel
-                        subIcon3: SvgPicture.asset('assets/icons/clock.svg'),
-                        subTitle3:
-                        "${model.expiryDate}", // Assuming timeRange is a property in WorkshopModel
-                      );
+                      return CustomGiftCard(model: model);
                     },
                   );
                 },

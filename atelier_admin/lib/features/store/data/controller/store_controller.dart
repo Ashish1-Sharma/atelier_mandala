@@ -9,4 +9,5 @@ class StoreController extends GetxController{
     'Bread'
   ].obs;
   static RxList isTagSelected = List.generate(5, (index) => false,).obs;
+  static RxBool isProcessing = false.obs;
 }

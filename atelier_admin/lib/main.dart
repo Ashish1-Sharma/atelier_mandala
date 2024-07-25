@@ -1,3 +1,4 @@
+import 'package:atelier_admin/constraints/colors.dart';
 import 'package:atelier_admin/features/authentication/presentation/screens/forget_password_screen.dart';
 import 'package:atelier_admin/features/authentication/presentation/screens/login_screen.dart';
 import 'package:atelier_admin/features/dashboard/presentation/screens/dashboard_screen.dart';
@@ -17,6 +18,7 @@ import 'package:atelier_admin/root_app.dart';
 import 'package:email_otp/email_otp.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
@@ -49,6 +51,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Atelier mandala',
       initialRoute: '/',
+      // theme: ThemeData(
+      //   primarySwatch: Colors.orange,
+      // ),
       getPages: [
         GetPage(name: '/login',page: () => const LoginScreen()),
         GetPage(name: '/forget',page: () => const ForgetPasswordScreen()),

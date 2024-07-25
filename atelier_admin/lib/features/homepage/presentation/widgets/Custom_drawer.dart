@@ -28,7 +28,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
     'Manage Takeaway',
     'Publish Gift Card  ',
     'Manage Store ',
-    'Edit Profile',
+    // 'Edit Profile',
     'Change Password',
     'Logout'
   ];
@@ -41,7 +41,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
     'takeaway',
     'gift_card',
     'store',
-    'edit_profile',
+    // 'edit_profile',
     'change_password',
     'logout'
   ];
@@ -54,33 +54,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
     '/takeaway',
     '/gift',
     '/store',
-    '/edit_profile'
+    // '/edit_profile'
   ];
 
   @override
   Widget build(BuildContext context) {
-    // if(HomePageController.currIndex.value == 9) {
-    //   Future.delayed(Duration.zero, () {
-    //     showDialog(
-    //       barrierDismissible: false,
-    //       context: context, builder: (context) =>
-    //         CupertinoAlertDialog(
-    //           title: Text(
-    //             "ALERT", style: AppTextStyles.bodyMain18(color: Colors.black),),
-    //           actions: [
-    //             TextButton(onPressed: () {
-    //               HomeAuthStore.logOut().then((value) {
-    //                 Get.offAndToNamed('/login');
-    //               },);
-    //             }, child: Text("Yes")),
-    //             TextButton(onPressed: () {
-    //               Get.back();
-    //             }, child: Text("No")),
-    //           ],
-    //           content: Text("Are you sure want to logout ?",
-    //             style: AppTextStyles.bodyMain16(color: Colors.black),),),);
-    //   });
-    // }
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,

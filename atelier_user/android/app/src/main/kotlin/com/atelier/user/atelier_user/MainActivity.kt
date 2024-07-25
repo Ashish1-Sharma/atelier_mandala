@@ -1,4 +1,4 @@
-package com.atelier.user.atelier_user
+package com.atelier.user
 
 import io.flutter.embedding.android.FlutterActivity
 

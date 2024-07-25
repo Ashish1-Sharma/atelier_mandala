@@ -10,8 +10,11 @@ class WorkshopModel {
   String location;
   int? durationMinutes;
   String price;// Storing duration as total minutes
+  String wId;
+  int users;
 
   WorkshopModel({
+    required this.users,
     required this.title,
     required this.description,
     required this.imageUrl,
@@ -23,6 +26,7 @@ class WorkshopModel {
     required this.location,
     this.durationMinutes,
     required this.price,
+    required this.wId
   });
 
   // Factory method to create a Workshop instance from a map (e.g., from JSON)
@@ -39,6 +43,9 @@ class WorkshopModel {
       location: map['location'] ?? '',
       durationMinutes: map['durationMinutes'] ?? 0,
       price:  map['price'] ?? '',
+      wId: map['wId'] ?? '',
+      users: map['users'] ?? 0,
+
     );
   }
 
@@ -55,7 +62,9 @@ class WorkshopModel {
         'ticketName': ticketName,
         'location': location,
         'durationMinutes': durationMinutes,
-        'price' : price
+        'price' : price,
+        'wId' : wId,
+        'users' : users
       };
 
 }

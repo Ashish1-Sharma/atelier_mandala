@@ -1,5 +1,6 @@
 import 'package:atelier_admin/constraints/colors.dart';
 import 'package:atelier_admin/features/workshop/data/models/workshop_model.dart';
+import 'package:atelier_admin/features/workshop/presentation/widgets/custom_workshop_card.dart';
 import 'package:atelier_admin/global_firebase.dart';
 import 'package:atelier_admin/global_widgets/custom_card.dart';
 import 'package:atelier_admin/global_widgets/custom_search_bar.dart';
@@ -93,23 +94,7 @@ class _WorkshopScreenState extends State<WorkshopScreen> {
                       final docSnapshot = data?[index]; // Access data directly
                       final workshopModel =
                           WorkshopModel.fromMap(docSnapshot!.data());
-                      return CustomCard(
-                        image: workshopModel
-                            .imageUrl, // Assuming imageUrl is a property in WorkshopModel
-                        title: workshopModel.title,
-                        subTitle1:
-                            "324 People Enrolled", // Only show if enrolledCount exists
-                        price: workshopModel.price.isNotEmpty
-                            ? "€ ${workshopModel.price}"
-                            : "", // Only show if price exists
-                        subIcon2:
-                            true, // Assuming hasHighlighter is a property in WorkshopModel
-                        subTitle2:
-                            "${workshopModel.startDate} To ${workshopModel.endDate}", // Assuming dateRange is a property in WorkshopModel
-                        subIcon3: SvgPicture.asset('assets/icons/clock.svg'),
-                        subTitle3:
-                            "${workshopModel.startTime} To ${workshopModel.endTime}", // Assuming timeRange is a property in WorkshopModel
-                      );
+                      return CustomWorkshopCard(model: workshopModel);
                     },
                   );
                 },

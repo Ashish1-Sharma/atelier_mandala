@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:atelier_admin/constraints/colors.dart';
 import 'package:atelier_admin/constraints/fonts.dart';
+import 'package:atelier_admin/constraints/warnings.dart';
 import 'package:atelier_admin/features/authentication/presentation/widgets/CustomButton.dart';
 import 'package:atelier_admin/features/workshop/data/data_source/add_workshop.dart';
 import 'package:atelier_admin/features/workshop/data/models/workshop_model.dart';
+import 'package:atelier_admin/features/workshop/data/workshop_controller.dart';
 import 'package:atelier_admin/global_controller.dart';
+import 'package:atelier_admin/global_function/generate_uid.dart';
 import 'package:atelier_admin/global_widgets/custom_date_picker.dart';
 import 'package:atelier_admin/global_widgets/custom_description.dart';
 import 'package:atelier_admin/global_widgets/custom_elevated_button.dart';
@@ -16,6 +21,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../global_firebase.dart';
 
@@ -40,9 +46,26 @@ class _CreateNewWorkshopState extends State<CreateNewWorkshop> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     GlobalController.pickedImage = null;
+    GlobalController.path.value = "";
+    GlobalController.image = File('');
+    super.initState();
   }
+
+  @override
+  void dispose() {
+    title.dispose();
+    description.dispose();
+    startDate.dispose();
+    endDate.dispose();
+    startTime.dispose();
+    endTime.dispose();
+    ticketName.dispose();
+    location.dispose();
+    price.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final spaceH1 = Get.height * 0.015;
@@ -223,7 +246,8 @@ class _CreateNewWorkshopState extends State<CreateNewWorkshop> {
                 SizedBox(
                   height: spaceH2,
                 ),
-                CustomNormalTextField(controller: ticketName, hint: "Ticket Name"),
+                CustomNormalTextField(
+                    controller: ticketName, hint: "Ticket Name"),
                 SizedBox(
                   height: spaceH1,
                 ),
@@ -246,8 +270,7 @@ class _CreateNewWorkshopState extends State<CreateNewWorkshop> {
                 SizedBox(
                   height: spaceH2,
                 ),
-                CustomNormalTextField(
-                    controller: price, hint: "Enter Price"),
+                CustomNormalTextField(controller: price, hint: "Enter Price"),
                 SizedBox(
                   height: Get.height * 0.03,
                 ),
@@ -258,26 +281,65 @@ class _CreateNewWorkshopState extends State<CreateNewWorkshop> {
                             sideColor: AppColors.brandColor,
                             txtColor: AppColors.brandColor,
                             txt: "Save",
-                            onPressed: () {
-
-                            })),
+                            onPressed: () {})),
                     SizedBox(
                       width: Get.width * 0.06,
                     ),
-                    Expanded(
-                        child: CustomElevatedButton(
-                            backColor: AppColors.brandColor,
-                            txtColor: AppColors.black6,
-                            txt: "Publish",
-                            onPressed: () async {
-                              Reference ref = GlobalFirebase.storage.ref().child("/workshop/${GlobalController.link.value}");
-                              final snapshot = await ref.putFile(GlobalController.image!).whenComplete(() => null);
-                              String downloadUrl = await snapshot.ref.getDownloadURL();
-                              print(downloadUrl);
-                              WorkshopModel model = WorkshopModel(title: title.text, description: description.text, imageUrl: downloadUrl, startDate: startDate.text, startTime: startTime.text, endDate: endDate.text, endTime: endTime.text, ticketName: ticketName.text, location: location.text,price: price.text);
+                    Obx(
+                        ()=> Expanded(
+                          child: WorkshopController.isProcessing.value ? Container(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: AppColors.brandColor,
+                              ),
+                              child: const Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )))
+                          : CustomElevatedButton(
+                              backColor: AppColors.brandColor,
+                              txtColor: AppColors.black6,
+                              txt: "Publish",
+                              onPressed: () async {
+                                WorkshopController.isProcessing.value = true;
+                                if (!(title.text.isEmpty || description.text.isEmpty || ticketName.text.isEmpty || location.text.isEmpty || price.text.isEmpty)) {
+                                  if (!(startDate.text.isEmpty && endDate.text.isEmpty && startTime.text.isEmpty && endTime.text.isEmpty)) {
 
-                              AddWorkshop.pushData(model).then((value) => Get.back());
-                            }))
+                                    if(checkDateAndTime(startDate.text, startTime.text, endDate.text, endTime.text)){
+                                      Warnings.onError("Selected date choose correctly");
+                                    } else{
+                                        if (!(GlobalController.pickedImage == null)) {
+
+                                          Reference ref = GlobalFirebase.storage.ref().child("/workshop/${GlobalController.link.value}");
+
+                                          final snapshot = await ref.putFile(GlobalController.image!).whenComplete(() => null);
+                                          String downloadUrl = await snapshot.ref.getDownloadURL();
+                                          print(downloadUrl);
+                                          final id = DateTime.now().millisecondsSinceEpoch.toString();
+                                          WorkshopModel model = WorkshopModel(title: title.text, description: description.text, imageUrl: downloadUrl, startDate: startDate.text, startTime: startTime.text, endDate: endDate.text, endTime: endTime.text, ticketName: ticketName.text, location: location.text, price: price.text, wId: id, users: 0 );
+                                          AddWorkshop.pushData(model,id)
+                                              .then((value) => Get.back());
+                                          WorkshopController.isProcessing.value = false;
+                                        } else{
+                                          print("Pls Pick the image."); WorkshopController.isProcessing.value = false;
+                                          Warnings.onError("Pls Pick the image.");
+                                        }
+                                      }
+                                    WorkshopController.isProcessing.value = false;
+                                  } else {
+                                    Warnings.onError(
+                                        "Date And time field is empty."); WorkshopController.isProcessing.value = false;
+                                  }
+                                } else {
+                                  Warnings.onError("Something is missing."); WorkshopController.isProcessing.value = false;
+                                  print(GlobalController.link);
+                                  print(startDate.text);
+                                }
+                              }
+                              )
+                        ),
+                    )
                   ],
                 ),
                 SizedBox(
@@ -290,4 +352,38 @@ class _CreateNewWorkshopState extends State<CreateNewWorkshop> {
       )),
     );
   }
+
+
+  bool checkDateAndTime(String startDate,String startTime,String endDate,String endTime) {
+
+    // Define date and time formats
+    DateFormat dateFormat = DateFormat('EEE - dd MMMM', 'en_US');
+    DateFormat timeFormat = DateFormat('h:mm a', 'en_US');
+
+    // Parse the start date and time
+    DateTime parsedStartDate = dateFormat.parse(startDate);
+    DateTime parsedStartTime = timeFormat.parse(startTime);
+    int currentYear = DateTime.now().year;
+    DateTime startDateTime = DateTime(
+      currentYear,
+      parsedStartDate.month,
+      parsedStartDate.day,
+      parsedStartTime.hour,
+      parsedStartTime.minute,
+    );
+
+    // Parse the end date and time
+    DateTime parsedEndDate = dateFormat.parse(endDate);
+    DateTime parsedEndTime = timeFormat.parse(endTime);
+    DateTime endDateTime = DateTime(
+      currentYear,
+      parsedEndDate.month,
+      parsedEndDate.day,
+      parsedEndTime.hour,
+      parsedEndTime.minute,
+    );
+
+    return endDateTime.isBefore(startDateTime);
+  }
+
 }

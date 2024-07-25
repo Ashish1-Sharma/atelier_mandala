@@ -1,4 +1,5 @@
 import 'package:atelier_admin/features/takeways/data/models/takeaway_model.dart';
+import 'package:atelier_admin/features/takeways/presentation/widgets/takeaway_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -96,22 +97,7 @@ class _TakeawayScreenState extends State<TakeawayScreen> {
                       final docSnapshot = data?[index]; // Access data directly
                       final model =
                       TakeawayModel.fromMap(docSnapshot!.data());
-                      return CustomCard(
-                        image: model.imageUrl, // Assuming imageUrl is a property in WorkshopModel
-                        title: model.title,
-                        subTitle1:
-                        "Type : Food", // Only show if enrolledCount exists
-                        price: model.price.isNotEmpty
-                            ? "€ ${model.price}"
-                            : "", // Only show if price exists
-                        subIcon2:
-                        true, // Assuming hasHighlighter is a property in WorkshopModel
-                        subTitle2:
-                        "${model.date}", // Assuming dateRange is a property in WorkshopModel
-                        subIcon3: SvgPicture.asset('assets/icons/clock.svg'),
-                        subTitle3:
-                        "30 minutes", // Assuming timeRange is a property in WorkshopModel
-                      );
+                      return TakeawayCard(model: model);
                     },
                   );
                 },

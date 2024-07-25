@@ -20,8 +20,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../../constraints/warnings.dart';
 import '../../../../global_controller.dart';
 import '../../../../global_firebase.dart';
+import '../../../../global_function/generate_uid.dart';
 
 class CreateNewStoreItem extends StatefulWidget {
   const CreateNewStoreItem({super.key});
@@ -36,7 +38,6 @@ class _CreateNewStoreItemState extends State<CreateNewStoreItem> {
   TextEditingController quantity = TextEditingController();
   TextEditingController price = TextEditingController();
   TextEditingController date = TextEditingController();
-
   GlobalKey<FormState> key = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -108,6 +109,20 @@ class _CreateNewStoreItemState extends State<CreateNewStoreItem> {
                 SizedBox(
                   height: spaceH1,
                 ),
+                SizedBox(
+                  height: Get.height * 0.03,
+                ),
+                Text(
+                  "Choose Date",
+                  style: AppTextStyles.bodySmall(color: AppColors.black1),
+                ),
+                SizedBox(
+                  height: spaceH2,
+                ),
+                CustomDatePicker(controller: date),
+                SizedBox(
+                  height: spaceH1,
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -149,7 +164,7 @@ class _CreateNewStoreItemState extends State<CreateNewStoreItem> {
                 SizedBox(
                   height: spaceH1,
                 ),
-                CustomChoiceChips(),
+                // CustomChoiceChips(),
                 SizedBox(
                   height: Get.height * 0.03,
                 ),
@@ -164,32 +179,48 @@ class _CreateNewStoreItemState extends State<CreateNewStoreItem> {
                     SizedBox(
                       width: Get.width * 0.06,
                     ),
-                    Expanded(
-                        child: CustomElevatedButton(
+                    Obx(
+                          ()=> Expanded(
+                          child: StoreController.isProcessing.value ? Container(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: AppColors.brandColor,
+                              ),
+                              child: const Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )))
+                              : CustomElevatedButton(
                             backColor: AppColors.brandColor,
                             txtColor: AppColors.black6,
                             txt: "Publish",
                             onPressed: () async {
-                              Reference ref = GlobalFirebase.storage.ref().child(
-                                  "/store/${GlobalController.link.value}");
-                              final snapshot = await ref
-                                  .putFile(GlobalController.image!)
-                                  .whenComplete(() => null);
-                              String downloadUrl =
-                                  await snapshot.ref.getDownloadURL();
-                              // print(int.parse(quantity.text));
-                              StoreModel model = StoreModel(
-                                  title: title.text,
-                                  description: description.text,
-                                  imageUrl: downloadUrl,
-                                  price: price.text,
-                                  stockQuantity: Counter.value.value,
-                                  tags: [],
-                                  time: date.text);
+                              StoreController.isProcessing.value = true;
+                              if (!(title.text.isEmpty || description.text.isEmpty || price.text.isEmpty || date.text.isEmpty)) {
+                                if (!(GlobalController.pickedImage == null)) {
 
-                              AddStore.pushData(model)
-                                  .then((value) => Get.back());
-                            }))
+                                  Reference ref = GlobalFirebase.storage.ref().child("/workshop/${GlobalController.link.value}");
+
+                                  final snapshot = await ref.putFile(GlobalController.image!).whenComplete(() => null);
+                                  String downloadUrl = await snapshot.ref.getDownloadURL();
+                                  print(downloadUrl);
+                                  final id = DateTime.now().millisecondsSinceEpoch.toString();
+
+                                  StoreModel model = StoreModel(title: title.text, description: description.text, imageUrl: downloadUrl, price: price.text, stockQuantity: quantity.text ?? '1', sId: id,users: 0, date: date.text);
+                                  AddStore.pushData(model,id)
+                                      .then((value) => Get.back());
+                                  StoreController.isProcessing.value = false;
+                                } else{
+                                  print("Pls Pick the image."); StoreController.isProcessing.value = false;
+                                  Warnings.onError("Pls Pick the image.");
+                                }
+                              } else {
+                                Warnings.onError("Something is missing."); StoreController.isProcessing.value = false;
+                                print(GlobalController.link);
+                                // print(startDate.text);
+                              }
+                            })))
                   ],
                 ),
                 SizedBox(
