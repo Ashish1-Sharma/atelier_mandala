@@ -52,7 +52,7 @@ class _CustomNormalTextFieldState extends State<CustomNormalTextField> {
               borderRadius: BorderRadius.circular(5)),
           hintText: widget.hint,
           hintStyle:
-              AppTextStyles.bodySmallwithNormal(color: AppColors.black3)),
+              AppTextStyles.bodySmallNormal(color: AppColors.black3)),
     );
   }
 }

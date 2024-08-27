@@ -10,6 +10,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../../../constraints/space.dart';
 import '../../../../global_firebase.dart';
 import '../widgets/custom_gift_card.dart';
 
@@ -25,7 +26,7 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.black5,
+      color: AppColors.black6,
       margin: EdgeInsets.all(10),
       child: Column(
         children: [
@@ -47,7 +48,11 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide.none)),
+                          borderSide: BorderSide(
+                                color: AppColors.black4,
+                                width: 1
+
+                          ))),
                 ),
               ),
               Container(
@@ -66,6 +71,7 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
                       ))),
             ],
           ),
+          Space.spacer(0.02),
           Expanded(
             child: Obx(
                   () => StreamBuilder(

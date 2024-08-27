@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../global_firebase.dart';
 import 'alert_box.dart';
@@ -26,9 +25,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
     'User',
     'Payment',
     'Manage Takeaway',
-    'Publish Gift Card  ',
-    'Manage Store ',
-    // 'Edit Profile',
+    'Publish Gift Card',
+    'Manage Store',
     'Change Password',
     'Logout'
   ];
@@ -41,96 +39,98 @@ class _CustomDrawerState extends State<CustomDrawer> {
     'takeaway',
     'gift_card',
     'store',
-    // 'edit_profile',
     'change_password',
     'logout'
   ];
 
-  List<String> pageNames = [
+  final List<String> pageNames = [
     '/dashboard',
     '/workshop',
     '/users',
     '/payment',
     '/takeaway',
     '/gift',
-    '/store',
-    // '/edit_profile'
+    '/store'
   ];
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: Get.height * 0.02,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+    return Scaffold(
+      backgroundColor: AppColors.black6,
+      body: SafeArea(
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                width: 10,
+              SizedBox(height: Get.height * 0.02),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(width: 10),
+                  Image.asset('assets/logo.png', width: 40),
+                  SizedBox(width: 10),
+                  Text(
+                    "Atelier Mandala.",
+                    style: AppTextStyles.h3(color: Colors.black),
+                  ),
+                ],
               ),
-              Image.asset(
-                'assets/logo.png',
-                width: 40,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                "Atelier Mandala.",
-                style: AppTextStyles.h3(color: Colors.black),
+              SizedBox(height: Get.height * 0.04),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: drawerText.length + 2, // Adjust the count to include dividers
+                itemBuilder: (context, index) {
+                  if (index == 4 || index == 7) { // Insert Divider after Payment (index 4) and Manage Store (index 7)
+                    return Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      child: Divider(
+                        color: AppColors.brandColor,
+                        thickness: 1.0,
+                        height: 1.0,
+                      ),
+                    );
+                  }
+                  final adjustedIndex = (index > 4 && index <= 7) ? index - 1 : index > 7 ? index - 2 : index;
+
+                  return GestureDetector(
+                    onTap: () async {
+                      if (drawerText[adjustedIndex] == 'Logout') {
+                        await showCustomDialog(context);
+                      } else {
+                        HomePageController.currScreen.value = adjustedIndex;
+                        HomePageController.isScreenSelected.setAll(
+                            0, List.filled(
+                            HomePageController.isScreenSelected.length, false));
+                        HomePageController.isScreenSelected[adjustedIndex] = true;
+                        HomePageController.checkScreen();
+                        widget.scaffoldKey.currentState!.closeDrawer();
+                      }
+                    },
+                    child: Obx(
+                          () => ListTile(
+                        leading: SvgPicture.asset(
+                          'assets/icons/drawer_icons/${icons[adjustedIndex]}.svg',
+                          fit: BoxFit.contain,
+                          color: HomePageController.isScreenSelected[adjustedIndex]
+                              ? AppColors.brandColor
+                              : AppColors.black1,
+                        ),
+                        title: Text(
+                          drawerText[adjustedIndex],
+                          style: AppTextStyles.bodySmall(
+                              color: HomePageController.isScreenSelected[adjustedIndex]
+                                  ? AppColors.brandColor
+                                  : AppColors.black1),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               )
             ],
           ),
-          SizedBox(
-            height: Get.height * 0.04,
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: drawerText.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () async {
-                  if (index != 9) {
-                    HomePageController.currScreen.value = index;
-                    HomePageController.isScreenSelected.setAll(
-                        0,
-                        List.filled(
-                            HomePageController.isScreenSelected.length, false));
-                    HomePageController.isScreenSelected[index] = true;
-                    HomePageController.checkScreen();
-                    widget.scaffoldKey.currentState!.closeDrawer();
-                  } else {
-                    HomeAuthStore.logOut();
-                  }
-
-                  print(HomePageController.currIndex.value);
-                },
-                child: Obx(
-                  () => ListTile(
-                    leading: SvgPicture.asset(
-                      'assets/icons/drawer_icons/${icons[index]}.svg',
-                      fit: BoxFit.contain,
-                      color: HomePageController.isScreenSelected[index]
-                          ? AppColors.brandColor
-                          : AppColors.black1,
-                    ),
-                    title: Text(
-                      drawerText[index],
-                      style: AppTextStyles.bodySmall(
-                          color: HomePageController.isScreenSelected[index]
-                              ? AppColors.brandColor
-                              : AppColors.black1),
-                    ),
-                  ),
-                ),
-              );
-            },
-          )
-        ],
+        ),
       ),
     );
   }
@@ -146,26 +146,25 @@ class _CustomDrawerState extends State<CustomDrawer> {
         ),
         actions: [
           TextButton(
-              onPressed: () {
-                HomeAuthStore.logOut().then(
-                  (value) {
-                    HomePageController.isScreenSelected.setAll(
-                        0,
-                        List.filled(
-                            HomePageController.isScreenSelected.length, false));
-                    Get.offAndToNamed('/login');
-                  },
-                );
-              },
-              child: Text("Yes")),
+            onPressed: () {
+              HomeAuthStore.logOut().then((value) {
+                HomePageController.isScreenSelected.setAll(
+                    0, List.filled(
+                    HomePageController.isScreenSelected.length, false));
+                Get.offAndToNamed('/login');
+              });
+            },
+            child: Text("Yes"),
+          ),
           TextButton(
-              onPressed: () {
-                Get.back();
-              },
-              child: Text("No")),
+            onPressed: () {
+              Get.back();
+            },
+            child: Text("No"),
+          ),
         ],
         content: Text(
-          "Are you sure want to logout ?",
+          "Are you sure you want to logout?",
           style: AppTextStyles.bodyMain16(color: Colors.black),
         ),
       ),

@@ -25,7 +25,7 @@ class _WorkshopScreenState extends State<WorkshopScreen> {
   Widget build(BuildContext context) {
     // var item = "";
     return Container(
-      color: AppColors.black5,
+      color: AppColors.black6,
       margin: EdgeInsets.all(10),
       child: Column(
         children: [
@@ -47,7 +47,11 @@ class _WorkshopScreenState extends State<WorkshopScreen> {
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide.none)),
+                          borderSide: BorderSide(
+                              color: AppColors.black4,
+                              width: 1
+
+                          ))),
                 ),
               ),
               Container(

@@ -8,6 +8,7 @@ class TakeawayModel {
   int users;
   String tId;
   String duration;
+  String quantity;
 
   TakeawayModel({
     required this.title,
@@ -18,7 +19,8 @@ class TakeawayModel {
     required this.date,
     required this.users,
     required this.tId,
-    required this.duration
+    required this.duration,
+    required this.quantity
   });
 
   // Factory method to create an AddTakeaway object from JSON
@@ -33,6 +35,7 @@ class TakeawayModel {
       users: json['users'],
       tId: json['tId'],
       duration: json['duration'],
+      quantity: json['quantity'],
     );
   }
 
@@ -47,7 +50,8 @@ class TakeawayModel {
       'date': date,
       'users' : users,
       'tId' : tId,
-      'duration' : duration
+      'duration' : duration,
+      'quantity' : quantity
     };
   }
 }

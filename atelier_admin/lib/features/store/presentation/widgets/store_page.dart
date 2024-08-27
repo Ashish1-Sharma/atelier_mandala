@@ -12,7 +12,7 @@ import '../../../../global_widgets/custom_counter.dart';
 import '../../../../global_widgets/custom_elevated_button.dart';
 
 class StorePage extends StatefulWidget {
-  final StoreModel model;
+  final StoreModel? model;
   const StorePage({super.key, required this.model});
 
   @override
@@ -47,6 +47,7 @@ class _StorePageState extends State<StorePage> {
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Stack(
@@ -54,7 +55,7 @@ class _StorePageState extends State<StorePage> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
-                      widget.model.imageUrl,
+                      widget.model!.imageUrl,
                       fit: BoxFit.contain,
                       width: double.infinity,
                     ),
@@ -85,12 +86,12 @@ class _StorePageState extends State<StorePage> {
                 children: [
                   Space.spacer(0.02),
                   Text(
-                    widget.model.title,
+                    widget.model!.title,
                     style: AppTextStyles.h3Normal(color: AppColors.black2_5),
                   ),
                   Space.spacer(0.02),
                   Text(
-                    widget.model.description,
+                    widget.model!.description,
                     style: AppTextStyles.bodySmallNormal(color: AppColors.black2_5),
                   ),
                   Space.spacer(0.02),
@@ -159,10 +160,10 @@ class _StorePageState extends State<StorePage> {
                         ),
                         // Space.spacer(0.02),
                         // CustomCounter(controller: controller)
-                        Text(
-                          widget.model.stockQuantity == "" ? '1' :widget.model.stockQuantity,
-                          style: AppTextStyles.bodyMain16(color: AppColors.black1),
-                        ),
+                        // Text(
+                        //   widget.model!.quantity == "" ? '1' :widget.model.quantity,
+                        //   style: AppTextStyles.bodyMain16(color: AppColors.black1),
+                        // ),
                       ],
                     ),
                   ],

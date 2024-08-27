@@ -63,7 +63,7 @@ class _CustomSplashWidgetState extends State<CustomSplashWidget> {
             width: double.infinity,
             // alignment: Alignment.bottomCenter,
             margin: EdgeInsets.all(20),
-            child: CustomElevatedButton(backColor: AppColors.brandColor, txtColor: AppColors.black6, txt: widget.idx == 2 ? "Get Started" : "Next", onPressed: (){
+            child: CustomElevatedButton(backColor: AppColors.tertiaryColor, txtColor: AppColors.black6, txt: widget.idx == 2 ? "Get Started" : "Next", onPressed: (){
               print(widget.idx);
               if(widget.idx==2){
                 Get.offAndToNamed('/login');

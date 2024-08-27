@@ -17,7 +17,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     return TextFormField(
       controller: widget.controller,
       decoration: InputDecoration(
-        hintText: "day - date month",
+        hintText: "Select Date",
         fillColor: AppColors.black6,
         filled: true,
         focusedBorder: OutlineInputBorder(
@@ -26,10 +26,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.black4, width: 1.5),
             borderRadius: BorderRadius.circular(5)),
-        suffixIcon: const Icon(
-          Icons.keyboard_arrow_down_sharp,
-          color: AppColors.brandColor,
-        ),
+
       ),
       readOnly: true,
       onTap: () {
@@ -59,9 +56,13 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     ).then(
       (value) {
         if (value != null) {
-          DateFormat formatter = DateFormat("EEE - d MMMM");
-          widget.controller.text = formatter.format(value);
-          print(widget.controller.text);
+          // DateFormat formatter = DateFormat("EEE - d MMMM");
+          // widget.controller.text = formatter.format(value);
+          // print(widget.controller.text);
+          print(DateTime.fromMillisecondsSinceEpoch(value.millisecondsSinceEpoch));
+// Assuming you want to format the DateTime to a specific format before setting it to the controller
+          widget.controller.text = (value.millisecondsSinceEpoch).toString();
+
         }
       },
     );

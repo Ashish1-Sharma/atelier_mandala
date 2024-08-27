@@ -153,14 +153,14 @@ class _SignUpState extends State<SignUp> {
                                 padding: EdgeInsets.symmetric(vertical: 10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
-                                  color: AppColors.brandColor,
+                                  color: AppColors.tertiaryColor,
                                 ),
                                 child: const Center(
                                     child: CircularProgressIndicator(
                                   color: Colors.white,
                                 )))
                             : CustomElevatedButton(
-                                backColor: AppColors.brandColor,
+                                backColor: AppColors.tertiaryColor,
                                 txtColor: AppColors.black6,
                                 txt: "Create an Account",
                                 onPressed: () {

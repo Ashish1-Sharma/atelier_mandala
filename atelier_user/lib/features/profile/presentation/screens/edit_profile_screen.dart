@@ -1,7 +1,8 @@
+import 'package:atelier_user/features/profile/data/profile_controller.dart';
+import 'package:atelier_user/features/profile/data/profile_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../constraints/colors.dart';
 import '../../../../constraints/fonts.dart';
@@ -20,6 +21,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController dob = TextEditingController();
   TextEditingController gender = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // ProfileServices.extractUserInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     final spaceH1 = Get.height * 0.015;
@@ -30,16 +39,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.black6,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new,color: AppColors.brandColor,),
-          onPressed: (){
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: AppColors.brandColor,
+          ),
+          onPressed: () {
             Get.back();
           },
         ),
-        title: Text("Edit Profile"),
+        title: const Text("Edit Profile"),
       ),
       body: SafeArea(
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
+          child: Obx(
+        () => Container(
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -47,26 +61,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   // padding: EdgeInsets.s(15),
                   color: CupertinoColors.white,
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 30),
+                  padding: const EdgeInsets.symmetric(vertical: 30),
                   child: Column(
                     children: [
-                      Image.asset("assets/users/u_one.png",width: Get.height*0.2,fit: BoxFit.contain,),
-                      SizedBox(
+                      profileImage(),
+                      const SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        "Ashish sharma",
-                        style: AppTextStyles.h2(color: AppColors.black1),
+                      Obx(
+                        () => Text(
+                          ProfileController.name.value,
+                          style: AppTextStyles.h2(color: AppColors.black1),
+                        ),
                       ),
-                      Text(
-                        "wwwviveksharma45@gmail.com",
-                        style: AppTextStyles.bodySmallest(color: AppColors.black1),
+                      Obx(
+                        () => Text(
+                          ProfileController.email.value,
+                          style: AppTextStyles.bodySmallest(
+                              color: AppColors.black1),
+                        ),
                       )
                     ],
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   color: CupertinoColors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +100,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       SizedBox(
                         height: spaceH2,
                       ),
-                      CustomNormalTextField(controller: name, hint: "Ashish sharma"),
+                      CustomNormalTextField(
+                          controller: name, hint: ProfileController.name.value),
                       SizedBox(
                         height: Get.height * 0.03,
                       ),
@@ -92,7 +112,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       SizedBox(
                         height: spaceH2,
                       ),
-                      CustomNormalTextField(controller: email, hint: "wwwviveksharma45@gmail.com"),
+                      CustomNormalTextField(
+                          controller: email,
+                          hint: ProfileController.email.value),
                       SizedBox(
                         height: Get.height * 0.03,
                       ),
@@ -118,13 +140,34 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ],
                   ),
                 ),
-                Container(
+                SizedBox(
                     width: double.infinity,
-                    child: CustomElevatedButton(backColor: AppColors.brandColor, txtColor: AppColors.black6, txt: "Save", onPressed: (){}))
+                    child: CustomElevatedButton(
+                        backColor: AppColors.brandColor,
+                        txtColor: AppColors.black6,
+                        txt: "Save",
+                        onPressed: () {}))
               ],
             ),
-          )),
+          ),
+        ),
+      )),
     );
   }
 
+  Widget profileImage() {
+    return Container(
+      width: Get.height * 0.2,
+      height: Get.height * 0.2,
+      decoration: BoxDecoration(
+          color: AppColors.brandColor,
+          borderRadius: BorderRadius.circular(Get.height * 0.1)),
+      alignment: Alignment.center,
+      child: Text(
+        ProfileController.name.toString().substring(0, 1).toUpperCase(),
+        style: AppTextStyles.h1(color: AppColors.black6)
+            .copyWith(fontSize: Get.width * 0.25),
+      ),
+    );
+  }
 }

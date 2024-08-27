@@ -110,7 +110,7 @@ class _LogInState extends State<LogIn> {
                   Container(
                       width: double.infinity,
                       child: CustomElevatedButton(
-                          backColor: AppColors.brandColor,
+                          backColor: AppColors.tertiaryColor,
                           txtColor: AppColors.black6,
                           txt: "Log In",
                           onPressed: () {
@@ -147,7 +147,7 @@ class _LogInState extends State<LogIn> {
                     children: [
                       Text(
                         "Don't have an Account ? ",
-                        style: AppTextStyles.bodySmallwithNormal(
+                        style: AppTextStyles.bodySmallNormal(
                             color: AppColors.black3),
                       ),
                       GestureDetector(

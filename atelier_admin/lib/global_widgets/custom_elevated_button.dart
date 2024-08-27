@@ -29,7 +29,7 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
         backgroundColor: WidgetStateProperty.all(widget.backColor),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(4),
           ),
         ),
       ),

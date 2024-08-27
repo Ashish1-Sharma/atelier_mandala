@@ -25,7 +25,6 @@ class CustomField extends StatefulWidget {
 }
 
 class _CustomFieldState extends State<CustomField> {
-  // bool show = true;
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -56,7 +55,7 @@ class _CustomFieldState extends State<CustomField> {
                     ShowController.show.value = !ShowController.show.value;
                   },
                   icon: Icon(
-                    ShowController.show.value ? widget.icon1 : widget.icon2,
+                    ShowController.show.value ? widget.icon2 : widget.icon1,
                     color: AppColors.brandColor,
                     weight: 100,
                   )),)
@@ -66,5 +65,5 @@ class _CustomFieldState extends State<CustomField> {
 }
 
 class ShowController extends GetxController{
-  static RxBool show = false.obs;
+  static RxBool show = true.obs;
 }

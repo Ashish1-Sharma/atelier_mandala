@@ -87,6 +87,18 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: color,
   );
+  static TextStyle bodySmall2({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(14),
+    height: 1.3,
+    fontWeight: FontWeight.w500,
+    color: color,
+  );
+  static TextStyle bodySmall3({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(14),
+    height: 1.3,
+    fontWeight: FontWeight.w500,
+    color: color,
+  );
   static TextStyle bodySmallNormal({Color color = Colors.black}) => GoogleFonts.poppins(
     fontSize: getResponsiveFontSize(14),
     height: 1.3,
@@ -100,6 +112,26 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     color: color,
   );
+
+  static TextStyle bodyMini1({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(10),
+    height: 1.3,
+    fontWeight: FontWeight.bold,
+    color: color,
+  );
+  static TextStyle bodyMini2({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(10),
+    height: 1.3,
+    fontWeight: FontWeight.w500,
+    color: color,
+  );
+  static TextStyle bodyMini3({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(10),
+    height: 1.3,
+    fontWeight: FontWeight.w400,
+    color: color,
+  );
+
 }
 
 class AppShades {

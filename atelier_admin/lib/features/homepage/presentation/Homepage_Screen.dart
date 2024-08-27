@@ -7,8 +7,10 @@ import 'package:atelier_admin/features/payments/presentation/screens/Payment_scr
 import 'package:atelier_admin/features/profile/presentation/screens/edit_profile.dart';
 import 'package:atelier_admin/features/store/presentation/screens/Store_screen.dart';
 import 'package:atelier_admin/features/takeways/presentation/screens/takeaway_screen.dart';
+import 'package:atelier_admin/features/takeways/presentation/widgets/create_new_takeaway.dart';
 import 'package:atelier_admin/features/users/presentation/screens/user_page_screen.dart';
 import 'package:atelier_admin/features/workshop/presentation/screens/workshop_screen.dart';
+import 'package:atelier_admin/features/workshop/presentation/widgets/create_new_workshop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -75,11 +77,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.black5,
+      backgroundColor: AppColors.black6,
       key: scaffoldKey,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.black5,
+        backgroundColor: AppColors.black6,
         title: Obx(() => Text(
               menuItems[HomePageController.currScreen.value],
               style: AppTextStyles.h2(color: Colors.black),
@@ -111,16 +113,19 @@ class _HomePageState extends State<HomePage> {
                         int idx = HomePageController.currScreen.value;
                         print(idx);
                         if (idx == 1) {
-                          Get.toNamed(floatingRoutes[0]);
+                          // Get.toNamed(floatingRoutes[0]);
+                          Get.to(()=>CreateNewWorkshop());
                         } else if (idx == 4) {
-                          Get.toNamed(floatingRoutes[1]);
+                          Get.to(()=>CreateNewTakeaway());
+
+                          // Get.toNamed(floatingRoutes[1]);/
                         } else if (idx == 5) {
                           Get.toNamed(floatingRoutes[2]);
                         } else if (idx == 6) {
                           Get.toNamed(floatingRoutes[3]);
                         }
                       },
-                      backgroundColor: AppColors.brandColor,
+                      backgroundColor: AppColors.tertiaryColor,
                       child: Icon(Icons.add,color: AppColors.black6,),
                 )
                 : Container(),

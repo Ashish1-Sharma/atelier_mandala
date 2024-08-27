@@ -10,4 +10,9 @@ class StoreController extends GetxController{
   ].obs;
   static RxList isTagSelected = List.generate(5, (index) => false,).obs;
   static RxBool isProcessing = false.obs;
+  static RxBool showImagePicker = true.obs;
+
+  static RxList imageLinks = [].obs;
+
+  static RxBool isButtonSelected = false.obs;
 }

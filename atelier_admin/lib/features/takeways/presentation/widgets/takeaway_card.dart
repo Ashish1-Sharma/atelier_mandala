@@ -1,20 +1,23 @@
-import 'package:atelier_admin/constraints/colors.dart';
-import 'package:atelier_admin/constraints/fonts.dart';
-import 'package:atelier_admin/constraints/warnings.dart';
 import 'package:atelier_admin/features/takeways/data/models/takeaway_model.dart';
+import 'package:atelier_admin/features/takeways/presentation/widgets/create_new_takeaway.dart';
 import 'package:atelier_admin/features/takeways/presentation/widgets/takeaway_page.dart';
-import 'package:atelier_admin/features/workshop/data/models/workshop_model.dart';
-import 'package:atelier_admin/features/workshop/presentation/widgets/workshop_page.dart';
-import 'package:atelier_admin/global_firebase.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+
+import '../../../../constraints/colors.dart';
+import '../../../../constraints/fonts.dart';
+import '../../../../constraints/warnings.dart';
+import '../../../../global_firebase.dart';
+import '../../../workshop/presentation/widgets/create_new_workshop.dart';
 
 class TakeawayCard extends StatefulWidget {
   final TakeawayModel model;
 
-  const TakeawayCard({super.key, required this.model});
+  const TakeawayCard({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
 
   @override
   State<TakeawayCard> createState() => _TakeawayCardState();
@@ -23,169 +26,115 @@ class TakeawayCard extends StatefulWidget {
 class _TakeawayCardState extends State<TakeawayCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: AppColors.black6,
-      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 15),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-                margin: EdgeInsets.symmetric(horizontal: 5),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                      widget.model.imageUrl,
-                      width: 100,
-                      height: 90,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null)
-                          return child; // Image is loaded
-
-                        return Container(
-                          width: 100,
-                          height: 90,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                          .toDouble()
-                                  : null, // Handle cases where total bytes aren't available
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(10),
+            margin: EdgeInsets.symmetric(horizontal: 5),
+            decoration: BoxDecoration(
+            color: AppColors.yellow1,
+              border: Border.all(
+                color: AppColors.black2,
+                width: 1
+              ),
+              borderRadius: BorderRadius.circular(15)
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network(
+                    widget.model.imageUrl,
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(child: CircularProgressIndicator());
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: 80,
+                        width: 80,
+                        color: Colors.grey[300],
+                        child: Icon(Icons.image, color: Colors.grey[600]),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(width: 16.0),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(2),
+                                border: Border.all(
+                                    color: AppColors.successColor, width: 1)),
+                            child: CircleAvatar(
+                              radius: 3,
+                              backgroundColor: AppColors.successColor,
                             ),
                           ),
-                        );
-                      },
-                      errorBuilder: (context, error, stackTrace) {
-                        return Center(
-                          child: Text(
-                            'Error loading image!',
-                            style: TextStyle(color: Colors.red),
+                          SizedBox(height: 4.0),
+                          Text(
+                            widget.model.title.isEmpty
+                                ? "Title"
+                                : widget.model.title,
+                            style: AppTextStyles.bodySmall2(color: AppColors.black1),
                           ),
-                        );
-                      },
-                    ))),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.model.title,
-                      style: AppTextStyles.bodyMain18(color: AppColors.black1),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "${widget.model.users} People Enrolled",
-                          style: AppTextStyles.bodySmallest(
-                              color: AppColors.black3),
-                        ),
-                        // SizedBox(width: Get.width*0.1,),/
-                        Text(
-                          "€ ${widget.model.price}",
-                          style:
-                              AppTextStyles.bodySmall(color: AppColors.black1),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset('assets/icons/calender.svg'),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Expanded(
-                            child: Text(widget.model.date,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyles.bodySmallest(
-                                        color: AppColors.black3)
-                                    .copyWith(letterSpacing: 0.3)))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset('assets/icons/clock.svg'),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Text(widget.model.duration,
-                            style: AppTextStyles.bodySmallest(
-                                color: AppColors.black3))
-                      ],
-                    )
-                  ],
+                        ],
+                      ),
+                      SizedBox(height: 4.0),
+                      Text(
+                        widget.model.description.isEmpty
+                            ? "description"
+                            : widget.model.description,
+                        style: AppTextStyles.bodyMini3(color: AppColors.black3),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
-            Container(
-              child: PopupMenuButton(
-                color: Colors.white,
-                itemBuilder: (context) {
-                  return [
-                    PopupMenuItem(
-                        child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Edit",
-                        style:
-                            AppTextStyles.bodySmallNormal(color: Colors.black),
-                      ),
-                    )),
-                    PopupMenuItem(
-                        child: TextButton(
-                      onPressed: () {
-                        Get.to(TakeawayPage(model: widget.model));
-                      },
-                      child: Text(
-                        "Preview",
-                        style:
-                            AppTextStyles.bodySmallNormal(color: Colors.black),
-                      ),
-                    )),
-                    PopupMenuItem(
-                        child: TextButton(
-                      onPressed: () {
-                        GlobalFirebase.cloud
-                            .collection("takeaway")
-                            .doc(widget.model.tId)
-                            .delete()
-                            .then(
-                          (value) {
-                            Warnings.onSuccess("Successfully deleted");
-                          },
-                        );
-                      },
-                      child: Text(
-                        "Delete",
-                        style:
-                            AppTextStyles.bodySmallNormal(color: Colors.black),
-                      ),
-                    )),
-                  ];
-                },
-                child: Icon(
-                  Icons.more_vert,
-                  color: AppColors.brandColor,
-                ),
+          ),
+          Row(
+            children: [
+              TextButton(
+                onPressed: () => Get.to(CreateNewTakeaway(model: widget.model)),
+                child: Text("Edit",
+                    style:
+                    AppTextStyles.bodySmallest(color: AppColors.black1)),
               ),
-            )
-          ],
-        ),
+              TextButton(
+                onPressed: () => Get.to(TakeawayPage(model: widget.model)),
+                child: Text("Preview",
+                    style: AppTextStyles.bodySmallest(color: Colors.blue)),
+              ),
+              TextButton(
+                onPressed: () {
+                  GlobalFirebase.cloud
+                      .collection("takeaway")
+                      .doc(widget.model.tId)
+                      .delete()
+                      .then((value) {
+                    Warnings.onSuccess("Successfully deleted");
+                  });
+                },
+                child: Text("Delete",
+                    style: AppTextStyles.bodySmallest(color: Colors.red)),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

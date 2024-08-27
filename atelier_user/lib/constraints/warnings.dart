@@ -16,7 +16,7 @@ class Warnings{
         snackStyle: SnackStyle.FLOATING);
   }
   static SnackbarController onSuccess(String title){
-    return  Get.snackbar("Success",
+    return Get.snackbar("Success",
         title,
         icon: const Icon(Icons.gpp_good, color: AppColors.successColor),
         snackPosition: SnackPosition.TOP,

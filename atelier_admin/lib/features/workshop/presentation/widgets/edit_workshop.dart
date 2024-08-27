@@ -318,7 +318,7 @@ class _EditWorkshopState extends State<EditWorkshop> {
                                             String downloadUrl = await snapshot.ref.getDownloadURL();
                                             print(downloadUrl);
                                             final id = GenerateUid.generateRandomString();
-                                            WorkshopModel model = WorkshopModel(title: title.text, description: description.text, imageUrl: downloadUrl, startDate: startDate.text, startTime: startTime.text, endDate: endDate.text, endTime: endTime.text, ticketName: ticketName.text, location: location.text, price: price.text, wId: id, users: 0 );
+                                            WorkshopModel model = WorkshopModel(title: title.text, description: description.text, imageUrl: downloadUrl, startDate: startDate.text, startTime: startTime.text ,endTime: endTime.text, ticketName: ticketName.text, location: location.text, price: price.text, wId: id, users: 0, isPublic: true );
                                             AddWorkshop.pushData(model,id)
                                                 .then((value) => Get.back());
                                             WorkshopController.isProcessing.value = false;

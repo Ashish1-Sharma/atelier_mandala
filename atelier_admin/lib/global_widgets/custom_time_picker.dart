@@ -27,10 +27,10 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
         enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.black4, width: 1.5),
             borderRadius: BorderRadius.circular(5)),
-        suffixIcon: const Icon(
-          Icons.keyboard_arrow_down_sharp,
-          color: AppColors.brandColor,
-        ),
+        // suffixIcon: const Icon(
+        //   Icons.keyboard_arrow_down_sharp,
+        //   color: AppColors.brandColor,
+        // ),
       ),
       readOnly: true,
       onTap: () {

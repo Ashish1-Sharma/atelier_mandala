@@ -26,7 +26,7 @@ class _StoreScreenState extends State<StoreScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.black5,
+      color: AppColors.black6,
       margin: EdgeInsets.all(10),
       child: Column(
         children: [
@@ -48,7 +48,11 @@ class _StoreScreenState extends State<StoreScreen> {
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide.none)),
+                          borderSide: BorderSide(
+                              color: AppColors.black4,
+                              width: 1
+
+                          ))),
                 ),
               ),
               Container(

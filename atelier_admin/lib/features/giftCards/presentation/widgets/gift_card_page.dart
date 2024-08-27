@@ -10,7 +10,7 @@ import '../../../../constraints/space.dart';
 import '../../../../global_widgets/custom_elevated_button.dart';
 
 class GiftCardPage extends StatefulWidget {
-  final GiftCardModel model;
+  final GiftCardModel? model;
   const GiftCardPage({super.key, required this.model});
 
   @override
@@ -34,11 +34,11 @@ class _GiftCardPageState extends State<GiftCardPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(widget.model.imageUrl,width: double.infinity,fit: BoxFit.contain,),
+            Image.network(widget.model!.imageUrl,width: double.infinity,fit: BoxFit.contain,),
             Space.spacer(0.02),
-            Text(widget.model.title,style: AppTextStyles.h1Normal(color: AppColors.black2_5),),
+            Text(widget.model!.title,style: AppTextStyles.h1Normal(color: AppColors.black2_5),),
             Space.spacer(0.01),
-            Text("\$ ${widget.model.price}",style: AppTextStyles.h1Normal(color: AppColors.black2_5),),
+            Text("\$ ${widget.model!.price}",style: AppTextStyles.h1Normal(color: AppColors.black2_5),),
             Space.spacer(0.02),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -75,7 +75,7 @@ class _GiftCardPageState extends State<GiftCardPage> {
               ],
             ),
             Space.spacer(0.01),
-            Text(widget.model.description,style: AppTextStyles.bodySmallNormal(color: AppColors.black3),),
+            Text(widget.model!.description,style: AppTextStyles.bodySmallNormal(color: AppColors.black3),),
             ],
         ),
       ),

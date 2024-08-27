@@ -26,7 +26,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.black5,
+      color: AppColors.black6,
       margin: const EdgeInsets.symmetric(horizontal: 15),
       child: const SingleChildScrollView(
         child: Column(

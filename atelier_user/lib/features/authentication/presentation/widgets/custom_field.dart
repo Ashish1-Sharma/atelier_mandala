@@ -37,7 +37,7 @@ class _CustomFieldState extends State<CustomField> {
           decoration: InputDecoration(
             hintText: widget.txt,
             hintStyle:
-                AppTextStyles.bodySmallwithNormal(color: AppColors.black3),
+                AppTextStyles.bodySmallNormal(color: AppColors.black3),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(7),
               borderSide:
@@ -72,7 +72,7 @@ class _CustomFieldState extends State<CustomField> {
                 },
                 icon: Icon(
                   ShowController.show.value ? widget.icon2 : widget.icon1,
-                  color: AppColors.brandColor,
+                  color: AppColors.tertiaryColor,
                   weight: 100,
                 )),
           )),

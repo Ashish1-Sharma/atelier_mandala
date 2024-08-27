@@ -3,14 +3,9 @@ import 'dart:io';
 import 'package:atelier_admin/constraints/colors.dart';
 import 'package:atelier_admin/constraints/fonts.dart';
 import 'package:atelier_admin/global_controller.dart';
-import 'package:atelier_admin/global_firebase.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 
 class CustomUploadImage extends StatefulWidget {
   const CustomUploadImage({super.key});
@@ -20,11 +15,13 @@ class CustomUploadImage extends StatefulWidget {
 }
 
 class _CustomUploadImageState extends State<CustomUploadImage> {
-  late XFile? pickedImage = null;
+  late XFile? pickedImage;
   final _picker = ImagePicker();
+
   @override
   void initState() {
     // TODO: implement initState
+    GlobalController.path.value = '';
     super.initState();
 
   }
@@ -33,7 +30,9 @@ class _CustomUploadImageState extends State<CustomUploadImage> {
     return GestureDetector(
       onTap: pickImage,
       child: Container(
+        height: 400,
         width: double.infinity,
+        alignment: Alignment.center,
         padding: EdgeInsets.symmetric(vertical: Get.height*0.06),
         decoration: BoxDecoration(
           color: AppColors.black6,
@@ -44,23 +43,26 @@ class _CustomUploadImageState extends State<CustomUploadImage> {
           )
         ),
         child:Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Obx(
             ()=> Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                        color: AppColors.black4,
-                        width: 1.5
-                    )
-                ),
-                child: GlobalController.path.value.isEmpty ? Icon(Icons.image) : Image.file(File(GlobalController.path.value)),
+              alignment: Alignment.center,
+                child: GlobalController.path.value.isEmpty ? const Icon(Icons.image) : Image.file(File(GlobalController.pickedImage!.path),width: 250,fit: BoxFit.contain,height: 200,),
               ),
             ),
-            SizedBox(height: 10,),
-            Text("Click to upload",style: AppTextStyles.bodySmall(color: AppColors.black3)),
-            Text("JPG , PNG or GIF (max, 800x400)",style: AppTextStyles.bodySmall(color: AppColors.black3),)
+            const SizedBox(height: 10,),
+            Container(
+              child: GlobalController.path.value.isEmpty ? Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(child: Text("Click to upload",style: AppTextStyles.bodyMini1(color: AppColors.black3))),
+                  Flexible(child: Text("JPG , PNG or GIF (max, 800x400)",style: AppTextStyles.bodyMini1(color: AppColors.black3),))
+                ],
+              ) : const SizedBox()
+            )
           ],
         )
       ),
@@ -71,14 +73,12 @@ class _CustomUploadImageState extends State<CustomUploadImage> {
 
     GlobalController.pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
     if(GlobalController.pickedImage == null){
-      print("hello");
       return;
     }
-    print(GlobalController.pickedImage);
     GlobalController.path.value = GlobalController.pickedImage!.path;
-    print(GlobalController.path.value);
     GlobalController.image = File(GlobalController.pickedImage!.path);
     GlobalController.link.value = GlobalController.image.path.split("/").last;
+    print(GlobalController.link.value);
   }
 
 }

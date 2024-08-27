@@ -10,8 +10,6 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../constraints/colors.dart';
 import '../../../../global_firebase.dart';
-import '../../../../global_widgets/custom_card.dart';
-import '../../../../global_widgets/custom_search_bar.dart';
 
 class TakeawayScreen extends StatefulWidget {
   const TakeawayScreen({super.key});
@@ -27,7 +25,7 @@ class _TakeawayScreenState extends State<TakeawayScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.black5,
+      color: AppColors.black6,
       margin: EdgeInsets.all(10),
       child: Column(
         children: [
@@ -49,7 +47,11 @@ class _TakeawayScreenState extends State<TakeawayScreen> {
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide.none)),
+                          borderSide: BorderSide(
+                              color: AppColors.black4,
+                              width: 1
+
+                          ))),
                 ),
               ),
               Container(
@@ -73,12 +75,11 @@ class _TakeawayScreenState extends State<TakeawayScreen> {
             child: Obx(
                   () => StreamBuilder(
                 stream: GlobalFirebase.cloud
-                    .collection('takeaway_orders')
+                    .collection('takeaway')
                     .orderBy('title')
                     .startAt([_TempController.item.value]).endAt(
                     ["${_TempController.item.value}\uf8ff"]).snapshots(),
                 builder: (context, snapshot) {
-                  // print(_TempController.item.value);
                   final data = snapshot.data?.docs;
                   if (snapshot.hasError) {
                     return Text("${snapshot.error}");

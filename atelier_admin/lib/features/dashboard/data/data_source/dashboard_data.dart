@@ -33,7 +33,7 @@ class DashboardData {
 
   static Stream<int> tOrderCountStream() {
     return GlobalFirebase.cloud
-        .collection("takeaway_orders")
+        .collection("takeaway")
         .snapshots()
         .map((snapshot) => snapshot.size);
   }

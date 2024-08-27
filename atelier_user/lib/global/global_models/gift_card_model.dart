@@ -25,14 +25,14 @@ class GiftCardModel {
   // Factory method to create a GiftCardModel object from JSON
   factory GiftCardModel.fromMap(Map<String, dynamic> json) {
     return GiftCardModel(
-      title: json['title'],
-      description: json['description'],
-      imageUrl: json['imageUrl'],
-      expiryDate: json['expiryDate'],
+      title: json['title'] ?? '',
+      description: json['description'] ?? '',
+      imageUrl: json['imageUrl'] ?? '',
+      expiryDate: json['expiryDate'] ?? '',
       quantity: json['quantity'] ?? '1',
-      status: json['status'],
-      price: json['price'],
-      gId: json['gId'],
+      status: json['status'] ?? false,
+      price: json['price'] ?? '',
+      gId: json['gId'] ?? ''
       // codes: json['codes'],
     );
   }

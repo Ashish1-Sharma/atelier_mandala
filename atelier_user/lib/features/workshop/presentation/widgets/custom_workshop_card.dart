@@ -13,19 +13,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../constraints/space.dart';
 
 class CustomWorkshopCard extends StatefulWidget {
   final WorkshopModel model;
-  const CustomWorkshopCard({super.key,required this.model});
+  const CustomWorkshopCard({super.key, required this.model});
 
   @override
   State<CustomWorkshopCard> createState() => _CustomWorkshopCardState();
 }
 
 class _CustomWorkshopCardState extends State<CustomWorkshopCard> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -34,215 +35,105 @@ class _CustomWorkshopCardState extends State<CustomWorkshopCard> {
 
   @override
   Widget build(BuildContext context) {
+    print(Get.width*0.62);
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Get.to(WorkshopPage(model: widget.model));
       },
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-        padding: const EdgeInsets.all(10),
+        width: Get.width*0.6,
+        // margin: EdgeInsets.symmetric(vertical: 10,),
+        // padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: AppColors.black6,
-          border: Border.all(
-            color: AppColors.black3,
-            width: 0.5
-          ),
-          borderRadius: BorderRadius.circular(20)
-        ),
+            color: AppColors.black6,
+            border: Border.all(color: AppColors.black3, width: 0.5),
+            borderRadius: BorderRadius.circular(20)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Stack(
-              fit: StackFit.loose,
-              children: [
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
+            ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Stack(
+                  children: [
+                    Image.network(
                       widget.model.imageUrl,
                       width: double.infinity,
                       fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-                        );
-                      },
-                    )),
-                Positioned(
-                  left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 10,bottom: 10,top: 30),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        gradient: LinearGradient(
-                          colors: [Colors.transparent, Colors.black.withOpacity(1)],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
                     ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                size: 20,
-                                Icons.calendar_month,
-                                color: AppColors.brandColor,
-                              ),Space.width(0.02),
-                              Text(
-                                widget.model.startDate,
-                                style: AppTextStyles.bodySmallest(
-                                    color: AppColors.black6),
-                              ),Space.width(0.03),
-                              const Icon(
-                                size: 20,
-                                Icons.access_time_outlined,
-                                color: AppColors.brandColor,
+                    Positioned(
+                        right: 10,
+                        top: 10,
+                        child: InkWell(
+                          onTap: (){
+                            print("sucessfully added to favorite");
+                          },
+                          child: Container(
+                              padding: EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                              Space.width(0.02),
-                              Text(
-                                widget.model.startTime,
-                                style: AppTextStyles.bodySmallest(
-                                    color: AppColors.black6),
-                              ),
-                            ],
-                          ),
-                          Space.spacer(0.01),
-                          Flexible(
-                              child: Text(
-                            widget.model.title,
-                            style: AppTextStyles.h2(color: AppColors.black6),
-                          )),
-                          Space.spacer(0.01),
-                          Row(
-                            children: [
-                              Space.width(0.01),
-                              const Icon(
-                                Iconsax.location,
-                                size: 20,
-                                color: AppColors.brandColor,
-                              ),
-                              Space.width(0.01),
-                              Text(
-                                "Offline",
-                                style: AppTextStyles.bodySmallest(
-                                    color: AppColors.black6),
-                              ),
-                              Space.width(0.01),
-                              const Icon(
-                                size: 20,
-                                Icons.attach_money,
-                                color: AppColors.brandColor,
-                              ),
-                              Space.width(0.01),
-                              Text(
-                                widget.model.price,
-                                style: AppTextStyles.bodySmallest(
-                                    color: AppColors.black6),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ))
-              ],
-            ),
-            Space.spacer(0.015),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        "People Attending",
-                        style: AppTextStyles.bodyBig(color: AppColors.black1),
-                      ),
-                      Container(
-                        width: 100,
-                        child: Stack(
-                          children: [
-                            const CircleAvatar(
-                              backgroundImage: AssetImage("assets/users/u_one.png"),
-                            ),
-                            const Positioned(
-                              left: 20,
-                              child: CircleAvatar(
-                                backgroundImage: AssetImage("assets/users/u_two.png"),
-                              ),
-                            ),
-                            const Positioned(
-                              left: 40,
-                              child: CircleAvatar(
-                                radius: 20,
-                                backgroundImage: AssetImage("assets/users/u_one.png"),
-                              ),
-                            ),
-                            Positioned(
-                                left: 60,
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: Text("1.2K+",style: AppTextStyles.bodySmallest(color: AppColors.black6),),
+                              child: Icon(Icons.favorite_border, color: AppColors.black6)),
+                        )
+                    )
+                  ],
+                )),
 
-                                )
-                            ),
-                          ],
-                        ),
+            Space.spacer(0.015),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: Text(
+                      maxLines: 2,
+                      widget.model.title,
+                      style: AppTextStyles.bodyMain16500(color: AppColors.black1),
+                    ),
+                  ),
+                  Space.spacer(0.01),
+                  Row(
+                    children: [
+                      // Space.width(0.01),
+                      const Icon(
+                        Iconsax.location,
+                        size: 20,
+                        color: AppColors.black1,
+                      ),
+                      Space.width(0.01),
+                      Text(
+                        "Offline",
+                        style: AppTextStyles.bodySmallest(
+                            color: AppColors.black1),
+                      ),
+                      Space.width(0.01),
+                      const Icon(
+                        size: 20,
+                        Icons.calendar_month,
+                        color: AppColors.black1,
+                      ),
+                      Space.width(0.02),
+                      Text(
+                        DateFormat('dd MMM yyyy').format(DateTime.fromMicrosecondsSinceEpoch(int.parse(widget.model.startDate))),
+                        style: AppTextStyles.bodySmallest(
+                            color: AppColors.black1),
                       ),
                     ],
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  child: const Icon(
-                    Icons.share,
-                    color: AppColors.brandColor,
-                  ),
-                )
-              ],
+                  Space.spacer(0.015),
+                  Container(
+                      padding: EdgeInsets.only(left: 2),
+                      child: Text("€ ${widget.model.price}",style: AppTextStyles.bodyMain14_2(color: AppColors.black1))),
+                  Space.spacer(0.015),
+                ],
+              ),
             ),
-            Space.spacer(0.015),
-            FutureBuilder(future: SearchIds.fromWorkshop(widget.model.wId), builder: (context, snapshot) {
-              final value = snapshot.data ?? false;
-              return Container(
-                width: double.infinity,
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                child: value ? CustomElevatedButton(
-                    backColor: AppColors.brandColor,
-                    txtColor: AppColors.black6,
-                    txt: "Booked",
-                    onPressed: () {}) :  CustomElevatedButton(
-                    backColor: AppColors.brandColor,
-                    txtColor: AppColors.black6,
-                    txt: "Book Now",
-                    onPressed: () {Get.to(()=>WorkshopPage(model: widget.model));}),
-              );
-            },),
 
-            Space.spacer(0.015),
           ],
         ),
       ),
     );
   }
-
 }

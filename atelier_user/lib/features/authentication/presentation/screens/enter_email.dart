@@ -66,7 +66,7 @@ class _EnterEmailState extends State<EnterEmail> {
             Container(
               width: double.infinity,
               child: CustomElevatedButton(
-                  backColor: AppColors.brandColor,
+                  backColor: AppColors.tertiaryColor,
                   txtColor: AppColors.black6,
                   txt: "Continue",
                   onPressed: () {

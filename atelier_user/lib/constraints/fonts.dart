@@ -5,6 +5,8 @@ double getResponsiveFontSize(double baseFontSize) {
   return baseFontSize * Get.width / 375; // Assuming 375 is the base width of your design
 }
 
+
+//
 class AppTextStyles {
   static TextStyle h1({Color color = Colors.black}) => GoogleFonts.poppins(
     fontSize: getResponsiveFontSize(28),
@@ -36,6 +38,12 @@ class AppTextStyles {
     fontSize: getResponsiveFontSize(20),
     height: 1.2,
     fontWeight: FontWeight.bold,
+    color: color,
+  );
+  static TextStyle h3500({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(20),
+    height: 1.2,
+    fontWeight: FontWeight.w500,
     color: color,
   );
   static TextStyle h3Normal({Color color = Colors.black}) => GoogleFonts.poppins(
@@ -86,6 +94,18 @@ class AppTextStyles {
     fontWeight: FontWeight.normal,
     color: color,
   );
+  static TextStyle bodyMain16400({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(16),
+    height: 1.3,
+    fontWeight: FontWeight.normal,
+    color: color,
+  );
+  static TextStyle bodyMain16500({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(16),
+    height: 1.3,
+    fontWeight: FontWeight.w500,
+    color: color,
+  );
   static TextStyle bodyMain16withBold({Color color = Colors.black}) => GoogleFonts.poppins(
     fontSize: getResponsiveFontSize(16),
     height: 1.3,
@@ -98,15 +118,32 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
     color: color,
   );
-
+  static TextStyle bodyMain14_1({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(16),
+    height: 1.3,
+    fontWeight: FontWeight.w600,
+    color: color,
+  );
+  static TextStyle bodyMain14_2({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(16),
+    height: 1.3,
+    fontWeight: FontWeight.w500,
+    color: color,
+  );
   static TextStyle bodySmall({Color color = Colors.black}) => GoogleFonts.poppins(
     fontSize: getResponsiveFontSize(14),
     height: 1.3,
     fontWeight: FontWeight.w600,
     color: color,
   );
+static TextStyle bodySmallH2({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(14),
+    height: 1.3,
+    fontWeight: FontWeight.w500,
+    color: color,
+  );
 
-  static TextStyle bodySmallwithNormal({Color color = Colors.black}) => GoogleFonts.poppins(
+  static TextStyle bodySmallNormal({Color color = Colors.black}) => GoogleFonts.poppins(
     fontSize: getResponsiveFontSize(14),
     height: 1.3,
     fontWeight: FontWeight.w400,
@@ -117,6 +154,31 @@ class AppTextStyles {
     fontSize: getResponsiveFontSize(12),
     height: 1.3,
     fontWeight: FontWeight.w400,
+    color: color,
+  );
+  static TextStyle bodySmallestBold({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(12),
+    height: 1.3,
+    fontWeight: FontWeight.w500,
+    color: color,
+  );
+
+  static TextStyle bodySmallestH1({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(10),
+    height: 1.3,
+    fontWeight: FontWeight.w500,
+    color: color,
+  );
+  static TextStyle bodySmallestH2({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(10),
+    height: 1.3,
+    fontWeight: FontWeight.w400,
+    color: color,
+  );
+  static TextStyle bodySmallestH3({Color color = Colors.black}) => GoogleFonts.poppins(
+    fontSize: getResponsiveFontSize(10),
+    height: 1.3,
+    fontWeight: FontWeight.w300,
     color: color,
   );
   static TextStyle bodyMini({Color color = Colors.black}) => GoogleFonts.poppins(

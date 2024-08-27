@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '739941194529',
     projectId: 'atelia-mandala',
     storageBucket: 'atelia-mandala.appspot.com',
-    iosBundleId: 'com.atelier.user.atelierUser',
+    iosBundleId: 'com.atelier.user',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -72,7 +72,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '739941194529',
     projectId: 'atelia-mandala',
     storageBucket: 'atelia-mandala.appspot.com',
-    iosBundleId: 'com.atelier.user.atelierUser',
+    iosBundleId: 'com.atelier.user',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(

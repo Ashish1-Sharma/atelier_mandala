@@ -24,7 +24,7 @@ class _TakeawayPageState extends State<TakeawayPage> {
   @override
   void initState() {
     // TODO: implement initState
-    Counter.value.value = 1;
+    // Counter.value.value = 1;
     super.initState();
   }
 
@@ -56,6 +56,9 @@ class _TakeawayPageState extends State<TakeawayPage> {
                     widget.model.imageUrl,
                     fit: BoxFit.contain,
                     width: double.infinity,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset("assets/loading_images/takeaway.png",width: double.infinity,height: 250,fit: BoxFit.cover,);
+                    },
                   ),
                 ),
                 Space.spacer(0.04),
@@ -124,7 +127,7 @@ class _TakeawayPageState extends State<TakeawayPage> {
                     Space.spacer(0.02),
                     Text(
                       widget.model.description,
-                      style: AppTextStyles.bodySmallwithNormal(color: AppColors.black2),
+                      style: AppTextStyles.bodySmallNormal(color: AppColors.black2),
                     ),
                   ],
                 ),
@@ -134,7 +137,7 @@ class _TakeawayPageState extends State<TakeawayPage> {
                     Expanded(
                         child: Container(
                             alignment: Alignment.center,
-                            child: CustomCounter(controller: controller,))),
+                            child: CustomCounter(controller: controller,quantity: int.parse(widget.model.quantity)))),
                     Space.width(0.02),
                     Expanded(
                         child: CustomElevatedButton(

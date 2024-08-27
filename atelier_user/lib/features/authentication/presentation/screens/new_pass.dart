@@ -85,7 +85,7 @@ class _NewPassState extends State<NewPass> {
 
               Container(
                   width: double.infinity,
-                  child: CustomElevatedButton(backColor: AppColors.brandColor, txtColor: AppColors.black6, txt: "Continue", onPressed: (){}))
+                  child: CustomElevatedButton(backColor: AppColors.tertiaryColor, txtColor: AppColors.black6, txt: "Continue", onPressed: (){}))
 
             ],
           ),

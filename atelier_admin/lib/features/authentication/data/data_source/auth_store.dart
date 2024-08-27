@@ -48,8 +48,8 @@ class AuthStore {
               .then(
             (value) {
               print("from now on i will check are you admin or not ?");
-              if (value.data()?['email'] == email.toLowerCase()) {
-
+              print(value.data()?['email'] + email.toLowerCase());
+              if (value.data()?['email'].toString().compareTo(email.toLowerCase()) != null && value.data()?['email'].toString().compareTo(email.toLowerCase()) == 0) {
                 Get.snackbar("hello", "your email matches the admin email",
                     icon: Icon(Icons.gpp_good, color: AppColors.successColor),
                     snackPosition: SnackPosition.TOP,
@@ -76,14 +76,15 @@ class AuthStore {
 
 
   static Future<void> checkCurrUser() async {
-    final currEmail = GlobalFirebase.auth.currentUser?.email;
+    final currEmail = GlobalFirebase.auth.currentUser?.email ?? '';
     final result = await GlobalFirebase.cloud.collection("Admin").doc("v5cdYxiiK8ynTbMB8spH").get();
     final adminEmail = result.data()?['email'];
     print("${adminEmail} and ${currEmail}");
-    if(adminEmail == currEmail){
+    if(adminEmail.toString().compareTo(currEmail) == 0){
       Get.offAllNamed("/home");
     } else{
       Get.offAllNamed("/login");
+      GlobalFirebase.auth.signOut();
     }
   }
 }

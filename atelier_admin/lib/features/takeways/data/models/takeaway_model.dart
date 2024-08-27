@@ -4,21 +4,29 @@ class TakeawayModel {
   String imageUrl;
   String price;
   String date;
-  String category;
+  // String category;
   int users;
   String tId;
-  String duration;
+  // String duration;
+  // String quantity;
+  String location;
+  bool isPublic;
+  List<dynamic> pickUpTimings;
 
   TakeawayModel({
     required this.title,
     required this.description,
     required this.imageUrl,
     required this.price,
-    required this.category,
+    // required this.category,
     required this.date,
     required this.users,
     required this.tId,
-    required this.duration
+    // required this.duration,/
+    // required this.quantity,
+    required this.location,
+    required this.isPublic,
+    required this.pickUpTimings
   });
 
   // Factory method to create an AddTakeaway object from JSON
@@ -28,11 +36,15 @@ class TakeawayModel {
       description: json['description'],
       imageUrl: json['imageUrl'],
       price: json['price'],
-      category: json['category'],
+      // category: json['category'],
       date: json['date'],
       users: json['users'],
       tId: json['tId'],
-      duration: json['duration'],
+      // duration: json['duration'],
+      // quantity: json['quantity'],
+      location: json['location'],
+      isPublic: json['isPublic'],
+        pickUpTimings: json['pickUpTimings']
     );
   }
 
@@ -43,11 +55,15 @@ class TakeawayModel {
       'description': description,
       'imageUrl': imageUrl,
       'price': price,
-      'category': category,
+      // 'category': category,
       'date': date,
       'users' : users,
       'tId' : tId,
-      'duration' : duration
+      // 'duration' : duration,
+      // 'quantity' : quantity,
+      'location':location,
+      'isPublic' : isPublic,
+      'pickUpTimings' : pickUpTimings
     };
   }
 }

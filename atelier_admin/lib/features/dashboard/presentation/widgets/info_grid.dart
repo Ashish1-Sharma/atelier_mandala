@@ -40,8 +40,8 @@ class _InfoGridState extends State<InfoGrid> {
       // controller: d,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-        crossAxisSpacing: 5,
-        mainAxisSpacing: 5,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
       ),
 
       itemCount: 5,
@@ -51,8 +51,8 @@ class _InfoGridState extends State<InfoGrid> {
         return StreamBuilder<int>( // Specify the data type as int (assuming stream emits integers)
           stream: DashboardData.streamCounters(index),
           builder: (context, snapshot) {
-            return Card(
-              color: AppColors.black6,
+            return Container(
+              color: Color(0xFFFAFAFA),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -62,13 +62,13 @@ class _InfoGridState extends State<InfoGrid> {
                   ),
                   Text(
                     "${infoText[index]}",
-                    style: AppTextStyles.bodyBig(color: Colors.black),
+                    style: AppTextStyles.bodyMain16(color: Colors.black),
                   ),
                   snapshot.hasError
                       ? CircularProgressIndicator(color: AppColors.black1)
                       : Text(
                     snapshot.hasData ? "${snapshot.data}" : "-", // Display '-' if no data
-                    style: AppTextStyles.h3(color: Colors.black),
+                    style: AppTextStyles.h3(color: AppColors.tertiaryColor),
                   ),
                 ],
               ),

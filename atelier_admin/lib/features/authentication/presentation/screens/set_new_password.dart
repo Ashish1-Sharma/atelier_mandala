@@ -82,12 +82,9 @@ class _NewPasswordState extends State<NewPassword> {
                 height: Get.height * 0.02,
               ),
               CustomButton(str: "Continue",onPressed: (){
+
                 // widget.pageController.animateToPage(1, duration: Duration(milliseconds: 100), curve: Curves.linear);
               },),
-          
-          
-          
-          
             ],
           ),
         ),

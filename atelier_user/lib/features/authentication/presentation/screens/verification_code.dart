@@ -65,7 +65,7 @@ class _VerificationCodeState extends State<VerificationCode> {
             Container(
               width: double.infinity,
               child: CustomElevatedButton(
-                  backColor: AppColors.brandColor,
+                  backColor: AppColors.tertiaryColor,
                   txtColor: AppColors.black6,
                   txt: "Confirm",
                   onPressed: () {

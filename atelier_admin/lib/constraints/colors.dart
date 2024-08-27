@@ -6,6 +6,7 @@ class AppColors {
   static const Color secondaryColor = Color(0xFFC9B495);
   static const Color tertiaryColor = Color(0xFF1B1E3E);
 
+
   // Warning Colors
   static const Color errorColor = Color(0xFFCC3300);
   static const Color attentionColor = Color(0xFFFFCC00);
@@ -20,4 +21,6 @@ class AppColors {
   static const Color black4 = Color(0xFFD6D6D6);
   static const Color black5 = Color(0xFFF4F4F4);
   static const Color black6 = Color(0xFFFFFFFF);
+
+  static const Color yellow1 = Color(0xFFFBFCF8);
 }
