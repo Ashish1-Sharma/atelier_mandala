@@ -6,6 +6,8 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../../constraints/colors.dart';
 import '../../../../constraints/fonts.dart';
 import '../../../../global/global_widgets/custom_elevated_button.dart';
+import '../../../../global/global_widgets/custom_normal_text_field.dart';
+import '../../data/email_verification.dart';
 import '../widgets/custom_field.dart';
 
 class EnterEmail extends StatefulWidget {
@@ -53,13 +55,8 @@ class _EnterEmailState extends State<EnterEmail> {
             SizedBox(
               height: Get.height * 0.01,
             ),
-            CustomField(
-              txt: "hello@example.com",
-              controller: email,
-              validator: (e) {
-                return null;
-              },
-            ),
+            CustomNormalTextField(
+                controller: email, hint: "hello@gmail.com"),
             SizedBox(
               height: Get.height * 0.03,
             ),
@@ -70,9 +67,22 @@ class _EnterEmailState extends State<EnterEmail> {
                   txtColor: AppColors.black6,
                   txt: "Continue",
                   onPressed: () {
+                    EmailVerification.sendOtpToEmail(email.text.trim()).then(
+                          (value) {
+                        // if (value) {
+                        //   print(value);
+                        //   widget.controller.animateToPage(1, duration: const Duration(milliseconds: 100), curve: Curves.easeIn);
+                        //
+                        // } else {
+                        //   Get.snackbar("Error", "Try again sometime",
+                        //       icon: const Icon(Icons.dangerous, color: AppColors.errorColor),
+                        //       snackPosition: SnackPosition.TOP,
+                        //       snackStyle: SnackStyle.FLOATING);
+                        // }
+                      },
+                    );
 
-                    widget.controller.animateToPage(1, duration: const Duration(milliseconds: 100), curve: Curves.easeIn);
-                  }),
+                     }),
             )
           ],
         ),

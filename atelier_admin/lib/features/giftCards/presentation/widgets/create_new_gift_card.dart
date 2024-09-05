@@ -163,7 +163,7 @@ class _CreateNewGiftCardState extends State<CreateNewGiftCard> {
                       expiryDate: startDate.text,
                       gId: id ?? '',
                       code: couponCode.text,
-                      isPublic: false, price: price.text,);
+                      isPublic: false, price: price.text,isPurchased: false);
                   AddGiftCard.pushData(model, id!).then((value) => Get.back());
                 } catch (e) {
                   print(e);
@@ -395,6 +395,7 @@ class _CreateNewGiftCardState extends State<CreateNewGiftCard> {
                                   isPublic: true,
                                   code: couponCode.text,
                                   expiryDate: startDate.text,
+                                  isPurchased: false
                                 );
 
                                 // Push data to the server

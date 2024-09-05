@@ -20,6 +20,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       body: SafeArea(
         child: PageView(
           controller: pageController,
+          physics: NeverScrollableScrollPhysics(),
           children: [
             EnterEmail(controller:pageController),
             VerificationCode(controller: pageController,),

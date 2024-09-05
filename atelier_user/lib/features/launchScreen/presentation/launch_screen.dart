@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:atelier_user/constraints/colors.dart';
@@ -26,33 +25,33 @@ class _LaunchScreenState extends State<LaunchScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 1), () async {
-      await LaunchService.checkUser().then((value) {
-        if(value){
-          Get.offAndToNamed('/home');
-        } else{
-          Get.offAndToNamed('/login');
-        }
-      },);
-    },);
+    // Timer(Duration(seconds: 1), () async {
+    //   bool isAuthenticated = await LaunchService.checkUser();
+    //   if (isAuthenticated) {
+    //     Get.offAndToNamed('/home');
+    //   } else {
+    //     Get.offAndToNamed('/login');
+    //   }
+    // });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: double.infinity,
         height: double.infinity,
-       color: AppColors.tertiaryColor,
+        color: AppColors.tertiaryColor,
         child: Center(
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // SvgPicture.asset("assets/logo.svg",width: 200,),
               Expanded(
                   child: Container(
                       alignment: Alignment.center,
-                      child: Text("Atelier Mandala",style: AppTextStyles.h3500(color: AppColors.black4),))),
+                      child: Text(
+                        "Atelier Mandala",
+                        style: AppTextStyles.h3500(color: AppColors.black4),
+                      ))),
               Container(
                 width: double.infinity,
                 margin: EdgeInsets.symmetric(horizontal: 20),
@@ -72,17 +71,15 @@ class _LaunchScreenState extends State<LaunchScreen> {
                   color: AppColors.black6,
                   thumbColor: AppColors.brandColor,
                   thumbIconColor: Colors.black,
-
                   borderRadius: BorderRadius.circular(30),
                   onSwipe: () async {
                     // Perform delete action.
-                    await LaunchService.checkUser().then((value) {
-        if(value){
-          Get.offAndToNamed('/home');
-        } else{
-          Get.offAndToNamed('/login');
-        }
-      },);
+                    bool isAuthenticated = await LaunchService.checkUser();
+                    if (isAuthenticated) {
+                      Get.offAndToNamed('/home');
+                    } else {
+                      Get.offAndToNamed('/login');
+                    }
                   },
                 ),
               ),
@@ -93,6 +90,4 @@ class _LaunchScreenState extends State<LaunchScreen> {
       ),
     );
   }
-
-
 }

@@ -23,4 +23,6 @@ class HomePageController extends GetxController{
   ].obs;
   static RxInt screenIdx = 0.obs;
   static RxList<bool> is_nav_selected = List.generate(5, (index) => false,).obs;
+
+
 }

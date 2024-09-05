@@ -46,6 +46,7 @@ class _LogInState extends State<LogIn> {
       backgroundColor: AppColors.black6,
       body: SafeArea(
         child: Form(
+          key: formKey,
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
@@ -87,6 +88,9 @@ class _LogInState extends State<LogIn> {
                     txt: "Password",
                     controller: password,
                     validator: (e) {
+                      if(e!.isEmpty){
+                        return "pls enter a password";
+                      }
                       return null;
                     },
                   ),
@@ -115,10 +119,11 @@ class _LogInState extends State<LogIn> {
                           txt: "Log In",
                           onPressed: () {
                             // AuthService.logOut();
-                            AuthService.loginUser(
-                                    email.text ?? "", password.text ?? "").then((value) {
-                              Get.offAndToNamed('/home');
-                                    },);
+                            if(formKey.currentState!.validate()){
+                              AuthService.loginUser(
+                                  email.text ?? "", password.text ?? "").then((value) {
+                              },);
+                            }
 
                           })),
                   Space.spacer(0.03),
@@ -133,11 +138,13 @@ class _LogInState extends State<LogIn> {
                     ],
                   ),
                   Space.spacer(0.02),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomAuthIcon(icon: "Facebook"),
-                      CustomAuthIcon(icon: "Google"),
+                      GestureDetector(
+                          onTap: AuthService.handleSignin,
+                          child: CustomAuthIcon(icon: "Google")),
                       CustomAuthIcon(icon: "Apple"),
                     ],
                   ),

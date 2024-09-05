@@ -68,21 +68,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       fit: BoxFit.contain,
                     ),
                     Space.width(0.03),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Obx(() => Text(
-                              "${ProfileController.name}",
-                              style:
-                                  AppTextStyles.h3Normal(color: AppColors.black1),
-                            )),
-                        Space.spacer(0.005),
-                        Obx(() => Text("${ProfileController.email}",
-                            style: AppTextStyles.bodySmallH2(
-                                color: AppColors.black1))),
-                        // Space.spacer(0.005),
-                        // Text("20/08/2002",style: AppTextStyles.bodySmallH2(color: AppColors.black1)),
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Obx(() => Text(
+                                "${ProfileController.name}",
+                                overflow: TextOverflow.ellipsis,
+                                style:
+                                    AppTextStyles.h3Normal(color: AppColors.black1),
+                              )),
+                          Space.spacer(0.005),
+                          Obx(() => Text("${ProfileController.email}",
+                              style: AppTextStyles.bodySmallest(
+                                  color: AppColors.black1))),
+                          // Space.spacer(0.005),
+                          // Text("20/08/2002",style: AppTextStyles.bodySmallH2(color: AppColors.black1)),
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -92,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Text(
                       "Your orders",
-                      style: AppTextStyles.bodyMain16(color: AppColors.black1),
+                      style: AppTextStyles.h3500(color: AppColors.black1),
                     ),
                     Text(
                       "View All",
@@ -100,11 +103,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     )
                   ],
                 ),
+                Container(
+                  margin: const EdgeInsets.only(
+                      left: 5, top: 30, bottom: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Curated For You",
+                        style: AppTextStyles.h3500(
+                            color: AppColors.black2),
+                      ),
+                      Text(
+                        "View",
+                        style: AppTextStyles.bodySmallest(
+                            color: AppColors.black2),
+                      ),
+                    ],
+                  ),
+                ),
                 FutureBuilder(
                     future: ProfileServices.fetchWorkshops(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CustomWaitingWorkshop();
+                        return CircularProgressIndicator();
                       } else if (snapshot.hasError) {
                         return const SizedBox();
                       } else {
@@ -112,42 +135,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         final workshopModel =
                         List.generate(data.length,
                                 (index) => WorkshopModel.fromMap(data[index].data()));
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(
-                                  left: 5, top: 30, bottom: 15),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Curated For You",
-                                    style: AppTextStyles.h3500(
-                                        color: AppColors.black2),
-                                  ),
-                                  Text(
-                                    "View",
-                                    style: AppTextStyles.bodySmallest(
-                                        color: AppColors.black2),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Wrap(
-                                  spacing: 20,
-                                  children: List.generate(
-                                    workshopModel.length,
-                                    (index) {
-                                      return CustomWorkshopCard(
-                                          model: workshopModel[index]);
-                                    },
-                                  )),
-                            ),
-                          ],
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                              spacing: 20,
+                              children: List.generate(
+                                workshopModel.length,
+                                (index) {
+                                  return CustomWorkshopCard(
+                                      model: workshopModel[index]);
+                                },
+                              )),
                         );
                         return SizedBox();
                       }

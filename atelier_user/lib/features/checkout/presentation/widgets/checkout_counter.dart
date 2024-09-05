@@ -7,14 +7,13 @@ import '../../../../constraints/space.dart';
 import '../../../../global/global_widgets/custom_counter.dart';
 
 class CheckoutCounter extends StatefulWidget {
-
-  final int quantity;
   final ValueChanged<int> onValueChange;
-  const CheckoutCounter({super.key,required this.quantity, required this.onValueChange});
+  const CheckoutCounter({super.key, required this.onValueChange});
 
   @override
   State<CheckoutCounter> createState() => _CheckoutCounterState();
 }
+
 class _CheckoutCounterState extends State<CheckoutCounter> {
   final Counter _counter = Counter();
 
@@ -28,7 +27,7 @@ class _CheckoutCounterState extends State<CheckoutCounter> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        iconButton(Icons.add, () {
+        iconButton(Icons.remove, () {
           if (_counter.value.value > 1) {
             _counter.value.value = _counter.value.value - 1;
             widget.onValueChange(_counter.value.value);
@@ -41,10 +40,8 @@ class _CheckoutCounterState extends State<CheckoutCounter> {
         )),
         Space.width(0.01),
         iconButton(Icons.add, () {
-          if (_counter.value.value < widget.quantity) {
-            _counter.value.value = _counter.value.value + 1;
-            widget.onValueChange(_counter.value.value);
-          }
+          _counter.value.value = _counter.value.value + 1;
+          widget.onValueChange(_counter.value.value);
         }, context),
       ],
     );
@@ -59,8 +56,7 @@ class _CheckoutCounterState extends State<CheckoutCounter> {
         onPressed: onPressed,
         alignment: Alignment.center,
         padding: EdgeInsets.zero, // Remove default padding
-        icon:
-        Icon(icon, color: AppColors.brandColor, size: textStyle?.fontSize),
+        icon: Icon(icon, color: AppColors.brandColor, size: textStyle?.fontSize),
         style: ButtonStyle(
           fixedSize: WidgetStateProperty.all(
               Size(Get.height * 0.03, Get.height * 0.03)), // Set fixed size

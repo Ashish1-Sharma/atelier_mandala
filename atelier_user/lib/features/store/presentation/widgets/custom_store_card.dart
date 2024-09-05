@@ -4,11 +4,13 @@ import 'package:atelier_user/features/store/presentation/widgets/store_page.dart
 import 'package:atelier_user/features/store/presentation/widgets/store_sheet.dart';
 import 'package:atelier_user/global/global_models/store_model.dart';
 import 'package:atelier_user/global/global_widgets/custom_outlined_button.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../constraints/space.dart';
+import '../../../../constraints/warnings.dart';
 import '../../../takeaway/presentation/widgets/takeaway_sheet.dart';
 
 class CustomStoreCard extends StatefulWidget {
@@ -121,8 +123,16 @@ class _CustomStoreCardState extends State<CustomStoreCard> {
     //   ),
     // );
     return GestureDetector(
-      onTap: (){
-        customBottomSheet();
+      onTap: () async {
+        var connectivityResult = await Connectivity().checkConnectivity();
+        if (connectivityResult.first == ConnectivityResult.none) {
+          print("No Internet Connection");
+          Warnings.onError("Check your Internet Connection");
+          throw Exception("no internet connection");
+        } else{
+          customBottomSheet();
+        }
+
       },
       child: Container(
         padding: EdgeInsets.all(10),
@@ -141,7 +151,7 @@ class _CustomStoreCardState extends State<CustomStoreCard> {
                     Image.network(
                       widget.model.imageUrl,
                       width: 150,
-                      height: 150,
+                      height: 120,
                       fit: BoxFit.fill,
                     ),
                     Positioned(

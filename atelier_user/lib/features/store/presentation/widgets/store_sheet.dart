@@ -9,6 +9,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../../constraints/colors.dart';
 import '../../../../constraints/fonts.dart';
 import '../../../../constraints/space.dart';
+import '../../../../constraints/warnings.dart';
 import '../../../../global/global_function/add_ids.dart';
 import '../../../../global/global_widgets/custom_elevated_button.dart';
 
@@ -93,21 +94,16 @@ class _StoreSheetState extends State<StoreSheet> {
                 style: AppTextStyles.bodySmallest(color: AppColors.black1),
               ),
               Space.spacer(0.04),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                      alignment: Alignment.center,
-                      child: CustomCounter(controller: counter,quantity: int.parse(widget.model.stockQuantity))),
-                  Space.width(0.02),
-                  CustomElevatedButton(
-                      backColor: AppColors.tertiaryColor,
-                      txtColor: AppColors.black6,
-                      txt: "Add Item € ${widget.model.price}",
-                      onPressed: () {
-                        AddIds.toStore(widget.model.sId);
-                      })
-                ],
+              Container(
+                width: double.infinity,
+                child: CustomElevatedButton(
+                    backColor: AppColors.tertiaryColor,
+                    txtColor: AppColors.black6,
+                    txt: "Add Item € ${widget.model.price}",
+                    onPressed: () {
+                      AddIds.toStore(widget.model.sId);
+                      Warnings.onSuccess("Successfully added to Cart.");
+                    }),
               )
             ],
           ),

@@ -3,33 +3,42 @@ class StoreModel {
   String description;
   String imageUrl;
   String price;
-  String stockQuantity;
+  // String quantity;
   int users;
   String sId;
   String date;
+  String location;
+  List<dynamic> pickupTimings;
+  bool isPublic;
 
   StoreModel({
     required this.title,
     required this.description,
     required this.imageUrl,
     required this.price,
-    required this.stockQuantity,
+    // required this.quantity,
     required this.sId,
     required this.users,
-    required this.date
+    required this.date,
+    required this.pickupTimings,
+    required this.location,
+    required this.isPublic
   });
 
   // Factory method to create a StoreModel object from JSON
   factory StoreModel.fromMap(Map<String, dynamic> json) {
     return StoreModel(
-      title: json['title'] ?? '',
-      description: json['description'] ?? '',
-      imageUrl: json['imageUrl'] ?? '',
-      price: json['price'] ?? '',
-      stockQuantity: json['stockQuantity'] ?? '0',
-      sId: json['sId'] ?? '',
-      users: json['users'] ?? 0,
-      date: json['date'] ?? '',
+        title: json['title'] ?? '',
+        description: json['description'] ?? '',
+        imageUrl: json['imageUrl'] ?? '',
+        price: json['price'] ?? '',
+        // quantity: json['quantity'] ?? '0',
+        sId: json['sId'] ?? '',
+        users: json['users'] ?? 0,
+        date: json['date'] ?? '',
+        pickupTimings:json['pickupTimings'],
+        location: json['location'],
+        isPublic: json['isPublic']
     );
   }
 
@@ -40,10 +49,13 @@ class StoreModel {
       'description': description,
       'imageUrl': imageUrl,
       'price': price,
-      'stockQuantity': stockQuantity,
+      // 'quantity': quantity,
       'sId' : sId,
       'users' : users,
-      'date' : date
+      'date' : date,
+      'pickupTimings' : pickupTimings,
+      'location' : location,
+      'isPublic' : isPublic
     };
   }
 }

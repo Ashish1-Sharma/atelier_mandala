@@ -49,7 +49,7 @@ class _WorkshopCartOrderState extends State<GiftCartCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Price : \$${widget.model.price}",style: AppTextStyles.bodySmall(color: AppColors.black2)),
-                    CheckoutCounter( quantity: int.parse(widget.model.quantity), onValueChange: widget.onValueChange,)
+                    // CheckoutCounter( quantity: int.parse(widget.model.quantity), onValueChange: widget.onValueChange,)
                   ],
                 )
               ],

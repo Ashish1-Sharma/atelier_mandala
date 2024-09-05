@@ -1,3 +1,4 @@
+import 'package:atelier_user/constraints/warnings.dart';
 import 'package:atelier_user/global/global_models/store_model.dart';
 import 'package:atelier_user/global/global_models/takeaway_model.dart';
 import 'package:atelier_user/global/global_widgets/custom_counter.dart';
@@ -93,21 +94,16 @@ class _TakeawaySheetState extends State<TakeawaySheet> {
                 style: AppTextStyles.bodySmallest(color: AppColors.black1),
               ),
               Space.spacer(0.04),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                      alignment: Alignment.center,
-                      child: CustomCounter(controller: counter,quantity: int.parse(widget.model.quantity))),
-                  Space.width(0.02),
-                  CustomElevatedButton(
-                      backColor: AppColors.tertiaryColor,
-                      txtColor: AppColors.black6,
-                      txt: "Add Item € ${widget.model.price}",
-                      onPressed: () {
-                        AddIds.toTakeaway(widget.model.tId);
-                      })
-                ],
+              Container(
+                width: double.infinity,
+                child: CustomElevatedButton(
+                    backColor: AppColors.tertiaryColor,
+                    txtColor: AppColors.black6,
+                    txt: "Add Item € ${widget.model.price}",
+                    onPressed: () {
+                      AddIds.toTakeaway(widget.model.tId);
+                      Warnings.onSuccess("Successfully added to Cart.");
+                    }),
               )
             ],
           ),

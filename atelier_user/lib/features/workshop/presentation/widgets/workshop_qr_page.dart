@@ -2,8 +2,12 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:atelier_user/constraints/colors.dart';
 import 'package:atelier_user/constraints/warnings.dart';
+import 'package:atelier_user/features/homepage/presentation/screens/home_page.dart';
+import 'package:atelier_user/features/homepage/presentation/screens/home_page_screen.dart';
 import 'package:atelier_user/global/global_firebase.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:saver_gallery/saver_gallery.dart';
@@ -47,7 +51,9 @@ class _WorkshopQrPageState extends State<WorkshopQrPage> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            Get.back();
+          }
         ),
       ),
       body: Container(

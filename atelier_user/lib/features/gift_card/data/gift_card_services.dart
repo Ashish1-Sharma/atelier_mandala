@@ -4,7 +4,7 @@ import '../../../global/global_firebase.dart';
 
 class GiftCardServices{
   static Future<List<GiftCardModel>> fetchGiftCards() async {
-    final snapshot = await GlobalFirebase.cloud.collection('gift_cards').get();
+    final snapshot = await GlobalFirebase.cloud.collection('gift_cards').where('isPublic',isEqualTo: true).where('isPurchased',isEqualTo: false).get();
     final documents = snapshot.docs;
     return List.generate(documents.length, (index) {
       final docSnapshot = documents[index];

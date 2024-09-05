@@ -30,12 +30,12 @@ class HomePageServices {
 
       final takeawaySnapshot = await takeawayFuture;
       if (takeawaySnapshot.docs.isNotEmpty) {
-        results.addAll(takeawaySnapshot.docs);
+        results.add(takeawaySnapshot.docs.first);
       }
 
       final storeSnapshot = await storeFuture;
       if (storeSnapshot.docs.isNotEmpty) {
-        results.addAll(storeSnapshot.docs);
+        results.add(storeSnapshot.docs.first);
       }
     } catch (e) {
       // Handle errors

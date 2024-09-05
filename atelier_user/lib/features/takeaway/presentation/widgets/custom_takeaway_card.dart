@@ -2,16 +2,21 @@ import 'package:atelier_user/constraints/colors.dart';
 import 'package:atelier_user/constraints/fonts.dart';
 import 'package:atelier_user/features/takeaway/presentation/widgets/takeaway_page.dart';
 import 'package:atelier_user/features/takeaway/presentation/widgets/takeaway_sheet.dart';
+import 'package:atelier_user/global/global_firebase.dart';
 import 'package:atelier_user/global/global_models/takeaway_model.dart';
 import 'package:atelier_user/global/global_widgets/custom_outlined_button.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../constraints/space.dart';
+import '../../../../constraints/warnings.dart';
+import '../../../../global/global_svg.dart';
 
 class CustomTakeawayCard extends StatefulWidget {
   final TakeawayModel model;
@@ -150,8 +155,16 @@ class _CustomTakeawayCardState extends State<CustomTakeawayCard> {
     //   ),
     // );
     return GestureDetector(
-      onTap: (){
-        customBottomSheet();
+      onTap: () async {
+        var connectivityResult = await Connectivity().checkConnectivity();
+        if (connectivityResult.first == ConnectivityResult.none) {
+          print("No Internet Connection");
+          Warnings.onError("Check your Internet Connection");
+          throw Exception("no internet connection");
+        } else{
+          customBottomSheet();
+        }
+
       },
       child: Container(
         padding: EdgeInsets.all(10),
@@ -225,31 +238,26 @@ class _CustomTakeawayCardState extends State<CustomTakeawayCard> {
             ),
             ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Stack(
-                  children: [
-                    Image.network(
-                      widget.model.imageUrl,
-                      width: 150,
+                child: Image.network(
+                  widget.model.imageUrl,
+                  width: 150,
+                  height: 150,
+                  fit: BoxFit.fill,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child; // Return the loaded image
+                    } else {
+                      return Image.asset("assets/loading_images/load_t.jpg",width: 150,height: 150,fit: BoxFit.fill,); // Show a placeholder while loading
+                    }
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return SvgPicture.string(
+                      GlobalSvg.error404Illistration,
+                      fit: BoxFit.contain,
+                      width: double.infinity,
                       height: 150,
-                      fit: BoxFit.fill,
-                    ),
-                    Positioned(
-                        right: 10,
-                        top: 10,
-                        child: InkWell(
-                          onTap: (){
-                            print("sucessfully added to favorite");
-                          },
-                          child: Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Icon(Icons.favorite_border, color: AppColors.black6)),
-                        )
-                            )
-                  ],
+                    ); // Show an error illustration on failure
+                  },
                 ))
           ],
         ),

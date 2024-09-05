@@ -1,8 +1,10 @@
+import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:atelier_user/global/global_function/add_ids.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../constraints/colors.dart';
 import '../../../../constraints/fonts.dart';
@@ -104,7 +106,9 @@ class _WorkshopPageState extends State<WorkshopPage> {
                             )),
                         Space.width(0.03),
                         Text(
-                          "${widget.model.startDate}",
+                          DateFormat('dd MMM yyyy').format(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                  int.parse(widget.model.startDate))),
                           style: AppTextStyles.bodySmallNormal(
                               color: AppColors.black1),
                         ),
@@ -154,12 +158,20 @@ class _WorkshopPageState extends State<WorkshopPage> {
                             txtColor: AppColors.black6,
                             txt: "Enroll Now",
                             onPressed: () {
-                              Get.to(()=>AddWorkshop(model: widget.model,));
+                              Get.to(() => AddWorkshop(
+                                    model: widget.model,
+                                  ));
                               // AddIds.toWorkshop(widget.model.wId);
                             })),
                     Space.spacer(0.04),
-                    Text("Add to Calender",style: AppTextStyles.bodyMain16500(color: AppColors.black1),),
-                    SvgPicture.asset("assets/calender.svg"),
+                    Text(
+                      "Add to Calender",
+                      style:
+                          AppTextStyles.bodyMain16500(color: AppColors.black1),
+                    ),
+                    GestureDetector(
+                        onTap: addToCalender,
+                        child: SvgPicture.asset("assets/calender.svg")),
                     // Row(
                     //   children: [
                     //     Expanded(child: CustomOutlinedButton(sideColor: AppColors.brandColor, txtColor: AppColors.brandColor, txt: "\$ ${widget.model.price}", onPressed: (){})),
@@ -194,5 +206,28 @@ class _WorkshopPageState extends State<WorkshopPage> {
         ),
       ),
     );
+  }
+
+  void addToCalender() {
+    final startDate =
+        DateTime.fromMillisecondsSinceEpoch(int.parse(widget.model.startDate));
+    final Event event = Event(
+      title: widget.model.title,
+      description: widget.model.description,
+      location: widget.model.location,
+      startDate: startDate,
+      endDate: DateTime(startDate.year, startDate.day + 1, startDate.month),
+      iosParams: IOSParams(
+        reminder: Duration(
+            minutes:
+                30), // on iOS, you can set alarm notification after your event.
+        url:
+            'https://www.example.com', // on iOS, you can set url to your event.
+      ),
+      androidParams: AndroidParams(
+        emailInvites: [], // on Android, you can add invite emails to your event.
+      ),
+    );
+    Add2Calendar.addEvent2Cal(event);
   }
 }

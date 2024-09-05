@@ -3,14 +3,13 @@ import 'package:get/get.dart';
 import '../../../constraints/warnings.dart';
 import '../../../global/global_firebase.dart';
 
-class LaunchService{
+class LaunchService {
   static Future<bool> checkUser() async {
-    final value = GlobalFirebase.auth.currentUser.isBlank;
-    print(value);
-    if(value == null){
+    final user = GlobalFirebase.auth.currentUser;
+    if (user == null) {
       return false;
-    } else{
-      return !value;
+    } else {
+      return true;
     }
   }
 }

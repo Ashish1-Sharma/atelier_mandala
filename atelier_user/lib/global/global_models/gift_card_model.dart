@@ -3,10 +3,11 @@ class GiftCardModel {
   String description;
   String imageUrl;
   String expiryDate;
-  String quantity;
-  bool status;
   String price;
   String gId;
+  bool isPublic;
+  String code;
+  bool isPurchased;
   // List<String> codes;
 
 
@@ -14,25 +15,27 @@ class GiftCardModel {
     required this.title,
     required this.description,
     required this.imageUrl,
-    required this.expiryDate,
-    required this.quantity,
-    required this.status,
     required this.price,
     required this.gId,
+    required this.isPublic,
+    required this.expiryDate,
+    required this.code,
+    required this.isPurchased
     // required this.codes
   });
 
   // Factory method to create a GiftCardModel object from JSON
   factory GiftCardModel.fromMap(Map<String, dynamic> json) {
     return GiftCardModel(
-      title: json['title'] ?? '',
-      description: json['description'] ?? '',
-      imageUrl: json['imageUrl'] ?? '',
-      expiryDate: json['expiryDate'] ?? '',
-      quantity: json['quantity'] ?? '1',
-      status: json['status'] ?? false,
-      price: json['price'] ?? '',
-      gId: json['gId'] ?? ''
+        title: json['title'],
+        description: json['description'],
+        imageUrl: json['imageUrl'],
+        price: json['price'],
+        gId: json['gId'],
+        isPublic: json['isPublic'],
+        expiryDate:json['expiryDate'],
+        code: json['code'],
+      isPurchased: json['isPurchased']
       // codes: json['codes'],
     );
   }
@@ -43,11 +46,12 @@ class GiftCardModel {
       'title': title,
       'description': description,
       'imageUrl': imageUrl,
-      'expiryDate': expiryDate,
-      'quantity': quantity,
-      'status': status,
       'price': price,
       'gId' : gId,
+      'isPublic' : isPublic,
+      'expiryDate': expiryDate,
+      'code' : code,
+      'isPurchased': isPurchased
 
     };
   }

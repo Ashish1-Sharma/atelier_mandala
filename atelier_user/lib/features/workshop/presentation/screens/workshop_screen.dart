@@ -3,14 +3,18 @@ import 'package:atelier_user/constraints/fonts.dart';
 import 'package:atelier_user/features/workshop/data/workshop_service.dart';
 import 'package:atelier_user/features/workshop/presentation/widgets/custom_waiting_workshop.dart';
 import 'package:atelier_user/features/workshop/presentation/widgets/custom_workshop_card.dart';
+import 'package:atelier_user/global/global_controller.dart';
+import 'package:atelier_user/global/global_errors/lost_in_space.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import '../../../../constraints/space.dart';
+import '../../../../global/global_errors/empty_cart.dart';
 import '../../../../global/global_firebase.dart';
 import '../../../../global/global_models/workshop_model.dart';
+import '../../../../global/global_widgets/nothing_is_available.dart';
 
 class WorkshopScreen extends StatefulWidget {
   const WorkshopScreen({super.key});
@@ -24,7 +28,8 @@ class _WorkshopScreenState extends State<WorkshopScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.black6,
-      body: FutureBuilder<List<WorkshopModel>>(
+      body:  Obx(
+    ()=> GlobalController.isConnect.value ? FutureBuilder<List<WorkshopModel>>(
         future: WorkshopService.fetchWorkshops(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -33,7 +38,9 @@ class _WorkshopScreenState extends State<WorkshopScreen> {
             return Text("${snapshot.error}");
           } else {
             final workshopModels = snapshot.data!;
-            return SingleChildScrollView(
+            return workshopModels.isEmpty ? Center(
+              child: AddProductScreen(),
+            ) :SingleChildScrollView(
               child: Wrap(
                 children: workshopModels.map((model) {
                   DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(model.wId.toString()));
@@ -48,9 +55,6 @@ class _WorkshopScreenState extends State<WorkshopScreen> {
                          mainAxisAlignment: MainAxisAlignment.start,
                          children: [
                            Container(
-                             // alignment: Alignment.center,
-                             // width: Get.width*0.2,
-                             // height: Get.width*0.2,
                              padding: EdgeInsets.symmetric(vertical: 8,horizontal: 8),
                              decoration: BoxDecoration(
                                color: AppColors.black6,
@@ -85,8 +89,8 @@ class _WorkshopScreenState extends State<WorkshopScreen> {
             );
           }
         },
-      ),
+      ): Error404Screen(),
 
-    );
+    ));
   }
 }

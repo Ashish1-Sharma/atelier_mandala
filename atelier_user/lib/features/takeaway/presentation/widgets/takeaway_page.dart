@@ -134,11 +134,11 @@ class _TakeawayPageState extends State<TakeawayPage> {
                 Space.spacer(0.04),
                 Row(
                   children: [
-                    Expanded(
-                        child: Container(
-                            alignment: Alignment.center,
-                            child: CustomCounter(controller: controller,quantity: int.parse(widget.model.quantity)))),
-                    Space.width(0.02),
+                    // Expanded(
+                    //     child: Container(
+                    //         alignment: Alignment.center,
+                    //         child: CustomCounter(controller: controller,quantity: int.parse(widget.model.quantity)))),
+                    // Space.width(0.02),
                     Expanded(
                         child: CustomElevatedButton(
                             backColor: AppColors.brandColor,

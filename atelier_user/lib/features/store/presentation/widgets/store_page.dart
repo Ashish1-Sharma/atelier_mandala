@@ -164,7 +164,7 @@ class _StorePageState extends State<StorePage> {
                                 AppTextStyles.bodyMain14(color: AppColors.black1),
                           ),
                           // Space.spacer(0.02),
-                          CustomCounter(controller: controller,quantity: int.parse(widget.model.stockQuantity == '' ? "1" : widget.model.stockQuantity),)
+                          // CustomCounter(controller: controller,quantity: int.parse(widget.model.stockQuantity == '' ? "1" : widget.model.stockQuantity),)
                         ],
                       ),
                     ],

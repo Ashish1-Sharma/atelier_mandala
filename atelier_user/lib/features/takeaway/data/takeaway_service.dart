@@ -3,7 +3,7 @@ import '../../../global/global_models/takeaway_model.dart';
 
 class TakeawayService{
   static Future<List<TakeawayModel>> fetchTakeaways() async {
-    final snapshot = await GlobalFirebase.cloud.collection('takeaway').get();
+    final snapshot = await GlobalFirebase.cloud.collection('takeaway').where('isPublic',isEqualTo: true).get();
     final documents = snapshot.docs;
     return List.generate(documents.length, (index) {
       final docSnapshot = documents[index];

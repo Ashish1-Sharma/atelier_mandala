@@ -2,7 +2,12 @@ import 'package:atelier_user/features/profile/data/profile_controller.dart';
 import 'package:atelier_user/global/global_firebase.dart';
 import 'package:atelier_user/global/global_models/workshop_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
+import '../../../constraints/colors.dart';
 import '../../../global/global_models/user_model.dart';
 class ProfileServices{
   static Future<UserModel> get() async{
@@ -51,4 +56,16 @@ class ProfileServices{
     print(results.length);
     return results;
   }
+
+
+  static Future<void> logOut() async {
+    await GlobalFirebase.auth.signOut().then((value) {
+      Get.snackbar("Success", "Successfully logged out",
+          icon: Icon(Icons.gpp_good, color: AppColors.successColor),
+          snackPosition: SnackPosition.TOP,
+          snackStyle: SnackStyle.FLOATING);
+      Get.offAndToNamed("/login");
+    },);
+  }
+
 }

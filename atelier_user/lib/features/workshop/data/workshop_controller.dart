@@ -5,6 +5,7 @@ class WorkshopController extends GetxController{
   static RxInt newMember = 1.obs;
   static RxList<List<TextEditingController>> attendeeController = [[TextEditingController(),TextEditingController(),TextEditingController()]].obs;
   static RxInt couponAmount = 0.obs;
+  static RxBool isCouponUsed = false.obs;
   static addAttendee(){
     newMember=newMember+1;
     attendeeController.add([TextEditingController(),TextEditingController(),TextEditingController()]);

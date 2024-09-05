@@ -3,7 +3,7 @@ import 'package:atelier_user/global/global_models/store_model.dart';
 
 class StoreServices{
   static Future<List<StoreModel>> fetchStoreItems() async{
-    final snapshot = await GlobalFirebase.cloud.collection('store').get();
+    final snapshot = await GlobalFirebase.cloud.collection('store').where('isPublic',isEqualTo: true).get();
     final documents = snapshot.docs;
     return List.generate(documents.length, (index) {
       final docSnapshot = documents[index];

@@ -2,17 +2,23 @@ import 'package:atelier_user/constraints/warnings.dart';
 import 'package:atelier_user/features/authentication/data/auth_controller.dart';
 import 'package:atelier_user/features/authentication/data/auth_service.dart';
 import 'package:atelier_user/features/authentication/presentation/widgets/custom_auth_icon.dart';
+import 'package:atelier_user/features/homepage/presentation/screens/home_page_screen.dart';
+import 'package:atelier_user/global/global_firebase.dart';
 import 'package:atelier_user/global/global_widgets/custom_elevated_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../constraints/colors.dart';
 import '../../../../constraints/fonts.dart';
 import '../../../../constraints/space.dart';
+import '../../../../global/global_models/user_model.dart';
 import '../../../../global/global_widgets/custom_normal_text_field.dart';
+import '../../data/auth_cache.dart';
 import '../widgets/custom_field.dart';
 
 class SignUp extends StatefulWidget {
@@ -210,11 +216,13 @@ class _SignUpState extends State<SignUp> {
                     ],
                   ),
                   Space.spacer(0.03),
-                  const Row(
+                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomAuthIcon(icon: "Facebook"),
-                      CustomAuthIcon(icon: "Google"),
+                      GestureDetector(
+                          onTap: AuthService.handleSignin,
+                          child: CustomAuthIcon(icon: "Google")),
                       CustomAuthIcon(icon: "Apple"),
                     ],
                   ),
@@ -247,4 +255,8 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+
+
+
+
 }

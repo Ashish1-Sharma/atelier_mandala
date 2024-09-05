@@ -1,9 +1,11 @@
 import 'package:atelier_user/constraints/colors.dart';
 import 'package:atelier_user/constraints/warnings.dart';
+import 'package:atelier_user/features/checkout/data/cart_controller.dart';
 import 'package:atelier_user/features/workshop/data/workshop_controller.dart';
 import 'package:atelier_user/features/workshop/presentation/widgets/workshop_qr_page.dart';
 import 'package:atelier_user/global/global_firebase.dart';
 import 'package:atelier_user/global/global_widgets/custom_elevated_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -28,6 +30,12 @@ class WorkshopPayment extends StatefulWidget {
 
 class _WorkshopPaymentState extends State<WorkshopPayment> {
   TextEditingController couponCode = TextEditingController();
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WorkshopController.couponAmount.value = 0;
+  }
   @override
   Widget build(BuildContext context) {
     final price = int.parse(widget.model.price);
@@ -72,6 +80,8 @@ class _WorkshopPaymentState extends State<WorkshopPayment> {
               child: CustomElevatedButton(backColor: AppColors.tertiaryColor, txtColor: AppColors.black6, txt:
                   'Buy Now', onPressed: () async {
                 // Get.to(()=>WorkshopQrPage(model: widget.model,attendeeData: widget.attendeeData,));
+                // addWorkshopToPurchase();
+                // print(couponCode.text);
 
                 try {
                   print("Initializing payment sheet...");
@@ -81,7 +91,10 @@ class _WorkshopPaymentState extends State<WorkshopPayment> {
                   print("Presenting payment sheet...");
                   await StripeService.presentPaymentSheet().then((value) {
                     addWorkshopToPurchase();
-                    Get.to(()=>WorkshopQrPage(model: widget.model,attendeeData: widget.attendeeData,));
+                    if(WorkshopController.isCouponUsed.value){
+                      GlobalFirebase.removeCoupon(couponCode.text);
+                    }
+                    Get.off(()=>WorkshopQrPage(model: widget.model,attendeeData: widget.attendeeData,));
                   },);
                   print("Payment sheet presented.");
                 } catch (e) {
@@ -164,10 +177,10 @@ class _WorkshopPaymentState extends State<WorkshopPayment> {
           flex: 3,
           child: TextField(
             controller: couponCode,
-            style: TextStyle(fontSize: 14, color: AppColors.black4),
+            style: TextStyle(fontSize: 14, color: AppColors.black1),
             decoration: InputDecoration(
               hintText: "Promo code",
-              hintStyle: TextStyle(color: Colors.grey),
+              hintStyle: TextStyle(color: AppColors.black1),
               filled: true,
               fillColor: Colors.grey[200],
               focusedBorder: OutlineInputBorder(
@@ -194,7 +207,8 @@ class _WorkshopPaymentState extends State<WorkshopPayment> {
             onPressed: () {
               GlobalFirebase.checkCouponPrice(couponCode.text).then((value) {
                 WorkshopController.couponAmount.value = value;
-                couponCode.clear();
+                WorkshopController.isCouponUsed.value = true;
+                // couponCode.clear();
               },);
             },
             child: Text(
@@ -208,19 +222,48 @@ class _WorkshopPaymentState extends State<WorkshopPayment> {
   }
 
   Future<void> addWorkshopToPurchase() async {
-
-    List emails = widget.attendeeData.values
+    // Extract and filter the emails
+    List newEmails = widget.attendeeData.values
         .map((data) => data['Email'] ?? '')
         .where((email) => email.isNotEmpty)
         .toList();
-    await GlobalFirebase.cloud
+
+    // Reference to the workshop document
+    final docRef = GlobalFirebase.cloud
         .collection("Users")
         .doc(GlobalFirebase.auth.currentUser!.uid)
         .collection("purchasedItems")
         .doc(GlobalFirebase.auth.currentUser!.uid)
         .collection("workshop")
-        .doc(widget.model.wId)
-        .set({'wId': widget.model.wId,'emails' : emails
-    });
-}
+        .doc(widget.model.wId);
+
+    // Check if the document exists
+    final docSnapshot = await docRef.get();
+    if (docSnapshot.exists) {
+      // Document exists, get existing emails
+      final existingData = docSnapshot.data() ?? {};
+      List<String> existingEmails = List<String>.from(existingData['emails'] ?? []);
+
+      // Add only new emails that are not already in the existing list
+      List<String> updatedEmails = List<String>.from(existingEmails);
+      for (String email in newEmails) {
+        if (!existingEmails.contains(email)) {
+          updatedEmails.add(email);
+        }
+      }
+
+      // Update the document with the merged emails
+      await docRef.set({
+        'wId': widget.model.wId,
+        'emails': updatedEmails,
+      }, SetOptions(merge: true));
+    } else {
+      // Document does not exist, create a new one
+      await docRef.set({
+        'wId': widget.model.wId,
+        'emails': newEmails,
+      });
+    }
+  }
+
 }

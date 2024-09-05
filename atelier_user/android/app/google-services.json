@@ -12,7 +12,20 @@
           "package_name": "com.atelier.admin.atelier_admin"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "739941194529-j7pu3m0knib54rmmhicud3orfii15jqs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.atelier.admin.atelier_admin",
+            "certificate_hash": "528ffefdb6348a7dc8fd45bcf3838946dc2e26b5"
+          }
+        },
+        {
+          "client_id": "739941194529-j6d9le479uo3mlpp43feg94rkrqq2crm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCjcT8Vq5LPTNmeaOeonN7ydURH7r-gL20"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739941194529-j6d9le479uo3mlpp43feg94rkrqq2crm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "739941194529-hm0d22an5cj0sa0blcd7vm7e34avdkib.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.atelier.user.atelierUser"
+              }
+            }
+          ]
         }
       }
     },
@@ -31,7 +56,20 @@
           "package_name": "com.atelier.user"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "739941194529-80lb52rmskh8uojkqg7m352d6bghl58g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.atelier.user",
+            "certificate_hash": "528ffefdb6348a7dc8fd45bcf3838946dc2e26b5"
+          }
+        },
+        {
+          "client_id": "739941194529-j6d9le479uo3mlpp43feg94rkrqq2crm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCjcT8Vq5LPTNmeaOeonN7ydURH7r-gL20"
@@ -39,7 +77,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739941194529-j6d9le479uo3mlpp43feg94rkrqq2crm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "739941194529-hm0d22an5cj0sa0blcd7vm7e34avdkib.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.atelier.user.atelierUser"
+              }
+            }
+          ]
         }
       }
     }
